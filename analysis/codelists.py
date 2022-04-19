@@ -1,9 +1,9 @@
-from cohortextractor import codelist, codelist_from_csv, combine_codelists
+from cohortextractor import codelist, codelist_from_csv
 
-cancer_codes = codelist_from_csv(
-    "codelists/opensafely-cancer-excluding-lung-and-haematological.csv", system="ctv3", column="CTV3ID"
+colorectal_referral_codes = codelist_from_csv(
+    "codelists/phc-2ww-referral-colorectal.csv", system="snomed", column="code"
 )
 
-#snomed_cancer_codes = codelist_from_csv(
-    #"codelists/opensafely-cancer-excluding-lung-and-haematological-snomed.csv", system="snomed", column="id"
-#)
+colorectal_symptom_codes = codelist_from_csv(
+    "codelists/phc-symptoms-colorectal-cancer.csv", system="snomed", column="code"
+)
