@@ -27,8 +27,8 @@ ax.spines['left'].set_color('none')
 ax.spines['right'].set_color('none')
 ax.tick_params(labelcolor='w', top=False, bottom=False, left=False, right=False)
 
-ax1.hist(data['colorectal_referral_time'].astype('timedelta64[D]').to_numpy(), bins = 24)
-ax2.hist(data2['colorectal_symptom_time'].astype('timedelta64[D]').to_numpy(), bins = 24)
+ax1.hist(data['colorectal_referral_time'].astype('timedelta64[D]').to_numpy(), bins = 48)
+ax2.hist(data2['colorectal_symptom_time'].astype('timedelta64[D]').to_numpy(), bins = 48)
 
 ax.set_xlabel('Time')
 ax.set_ylabel('Frequency')
