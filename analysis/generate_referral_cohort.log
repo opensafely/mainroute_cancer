@@ -1,0 +1,43 @@
+2022-05-02T22:38:42.321612000Z 2022-05-02 22:38:42 [info     ] Generating cohort for study_definition_referral in output [cohortextractor.cohortextractor] 
+2022-05-02T22:38:42.338446400Z 2022-05-02 22:38:42 [info     ] cohortextractor-stats          [cohortextractor.cohortextractor] description=generate_cohort for study_definition_referral (all index dates) execution_time=0:00:00.016793 execution_time_secs=0.01679250000000021
+2022-05-02T22:38:42.338507800Z Exception at 2022-05-02 22:38:42 UTC
+2022-05-02T22:38:42.338518800Z Traceback (most recent call last):
+2022-05-02T22:38:42.338524100Z   File "/opt/venv/bin/cohortextractor", line 8, in <module>
+2022-05-02T22:38:42.338530400Z     sys.exit(main())
+2022-05-02T22:38:42.338535700Z   File "/app/cohortextractor/cohortextractor.py", line 763, in main
+2022-05-02T22:38:42.339054100Z     generate_cohort(
+2022-05-02T22:38:42.339086700Z   File "/app/cohortextractor/cohortextractor.py", line 157, in generate_cohort
+2022-05-02T22:38:42.339282200Z     _generate_cohort(
+2022-05-02T22:38:42.339305700Z   File "/app/cohortextractor/cohortextractor.py", line 192, in _generate_cohort
+2022-05-02T22:38:42.339544700Z     study = load_study_definition(study_name)
+2022-05-02T22:38:42.339567400Z   File "/app/cohortextractor/cohortextractor.py", line 561, in load_study_definition
+2022-05-02T22:38:42.340014400Z     return getattr(importlib.import_module(name), value)
+2022-05-02T22:38:42.340032200Z   File "/usr/lib/python3.8/importlib/__init__.py", line 127, in import_module
+2022-05-02T22:38:42.340038700Z     return _bootstrap._gcd_import(name[level:], package, level)
+2022-05-02T22:38:42.340044200Z   File "<frozen importlib._bootstrap>", line 1014, in _gcd_import
+2022-05-02T22:38:42.340578000Z   File "<frozen importlib._bootstrap>", line 991, in _find_and_load
+2022-05-02T22:38:42.340597800Z   File "<frozen importlib._bootstrap>", line 975, in _find_and_load_unlocked
+2022-05-02T22:38:42.340978000Z   File "<frozen importlib._bootstrap>", line 671, in _load_unlocked
+2022-05-02T22:38:42.341206700Z   File "<frozen importlib._bootstrap_external>", line 848, in exec_module
+2022-05-02T22:38:42.341551600Z   File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+2022-05-02T22:38:42.341574200Z   File "/workspace/analysis/study_definition_referral.py", line 7, in <module>
+2022-05-02T22:38:42.342007500Z     study = StudyDefinition(
+2022-05-02T22:38:42.342032700Z   File "/app/cohortextractor/study_definition.py", line 38, in __init__
+2022-05-02T22:38:42.342045800Z     self.set_index_date(index_date)
+2022-05-02T22:38:42.342055400Z   File "/app/cohortextractor/study_definition.py", line 77, in set_index_date
+2022-05-02T22:38:42.342517700Z     self.covariate_definitions = evaluate_date_expressions_in_covariate_definitions(
+2022-05-02T22:38:42.342550500Z   File "/app/cohortextractor/date_expressions.py", line 27, in evaluate_date_expressions_in_covariate_definitions
+2022-05-02T22:38:42.342846700Z     evaluate_date_expression(start),
+2022-05-02T22:38:42.342877600Z   File "/app/cohortextractor/date_expressions.py", line 111, in __call__
+2022-05-02T22:38:42.342914200Z     return self.parse(date_str)
+2022-05-02T22:38:42.342925700Z   File "/app/cohortextractor/date_expressions.py", line 120, in parse
+2022-05-02T22:38:42.343279500Z     match = self.regex.match(expression_str.replace(" ", ""))
+2022-05-02T22:38:42.343306700Z AttributeError: 'tuple' object has no attribute 'replace'
+
+
+id: lca4w7fq7jnegtga
+docker_image_id: sha256:16456d9d500a8cc108677b923f1136764c8a89dafd0752b2cf1ff8c86309f4dd
+exit_code: 1
+
+outputs:
+  (no outputs)
