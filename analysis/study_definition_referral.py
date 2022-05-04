@@ -1,8 +1,8 @@
 from cohortextractor import StudyDefinition, patients, codelist, codelist_from_csv  # NOQA
 from codelists import *
 
-start_date = "2018-03-23",
-end_date = "2022-03-23",
+start_date = "2018-03-23"
+end_date = "2022-03-23"
 
 study = StudyDefinition(
     default_expectations={
