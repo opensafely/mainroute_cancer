@@ -16,6 +16,13 @@ study = StudyDefinition(
         between=[start_date, end_date],
     ),
 
+    colorectal_symptom_number=patients.with_these_clinical_events(
+        colorectal_symptom_codes,
+        between=[start_date, end_date],
+        returning="number_of_matches_in_period",
+        return_number_of_matches_in_period=True,
+        return_expectations={"int" : {"distribution": "poisson", "mean": 3}, "incidence" : 1.0},
+    ),
     colorectal_symptom_date=patients.with_these_clinical_events(
         colorectal_symptom_codes,
         between=[start_date, end_date],
