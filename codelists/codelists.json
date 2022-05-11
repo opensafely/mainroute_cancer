@@ -11,6 +11,36 @@
       "url": "https://codelists.opensafely.org/codelist/phc/symptoms-colorectal-cancer/6db4f24a/",
       "downloaded_at": "2022-04-19 19:14:52.060074Z",
       "sha": "291510577e8c2f9685750190d7045f5d67f3da8f"
+    },
+    "phc-symptom-colorectal-wl.csv": {
+      "id": "phc/symptom-colorectal-wl/497270f7",
+      "url": "https://codelists.opensafely.org/codelist/phc/symptom-colorectal-wl/497270f7/",
+      "downloaded_at": "2022-05-10 19:36:43.418620Z",
+      "sha": "0cfa0fe2ebfb3cbbe27ce8c7ac4f3515d418fdec"
+    },
+    "phc-symptom-colorectal-cibh.csv": {
+      "id": "phc/symptom-colorectal-cibh/3062fdc2",
+      "url": "https://codelists.opensafely.org/codelist/phc/symptom-colorectal-cibh/3062fdc2/",
+      "downloaded_at": "2022-05-10 19:36:43.845576Z",
+      "sha": "4409d658243ff6f425d746ec0b871e39dfd8fe52"
+    },
+    "phc-symptom-colorectal-pr-bleeding.csv": {
+      "id": "phc/symptom-colorectal-pr-bleeding/17538a8d",
+      "url": "https://codelists.opensafely.org/codelist/phc/symptom-colorectal-pr-bleeding/17538a8d/",
+      "downloaded_at": "2022-05-10 19:36:44.250490Z",
+      "sha": "7d5ea9520c325592d069695e1f0ec4825897231b"
+    },
+    "phc-symptom-colorectal-anaemia.csv": {
+      "id": "phc/symptom-colorectal-anaemia/7e441757",
+      "url": "https://codelists.opensafely.org/codelist/phc/symptom-colorectal-anaemia/7e441757/",
+      "downloaded_at": "2022-05-10 19:36:44.608241Z",
+      "sha": "79868f76c623c171da5bd933d52bd8919e6dc91d"
+    },
+    "phc-colorectal-cancer-icd10.csv": {
+      "id": "phc/colorectal-cancer-icd10/3315bdb8",
+      "url": "https://codelists.opensafely.org/codelist/phc/colorectal-cancer-icd10/3315bdb8/",
+      "downloaded_at": "2022-05-10 19:48:12.958561Z",
+      "sha": "975281ed2ea1e51026eeff234d9cb015375039ad"
     }
   }
 }

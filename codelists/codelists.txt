@@ -1,2 +1,7 @@
 phc/2ww-referral-colorectal/7eac259d
 phc/symptoms-colorectal-cancer/6db4f24a
+phc/symptom-colorectal-wl/497270f7
+phc/symptom-colorectal-cibh/3062fdc2
+phc/symptom-colorectal-pr-bleeding/17538a8d
+phc/symptom-colorectal-anaemia/7e441757
+phc/colorectal-cancer-icd10/3315bdb8
