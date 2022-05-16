@@ -17,6 +17,12 @@ actions:
       highly_sensitive:
         cohort: output/input_symptom.csv
 
+  generate_paired_cohort:
+    run: cohortextractor:latest generate_cohort --study-definition study_definition_paired
+    outputs:
+      highly_sensitive:
+        cohort: output/input_paired.csv
+
   describe:
     run: python:latest python analysis/report.py
     needs: [generate_referral_cohort, generate_symptom_cohort]
