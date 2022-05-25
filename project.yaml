@@ -5,18 +5,6 @@ expectations:
 
 actions:
 
-  generate_referral_cohort:
-    run: cohortextractor:latest generate_cohort --study-definition study_definition_referral
-    outputs:
-      highly_sensitive:
-        cohort: output/input_referral.csv
-
-  generate_symptom_cohort:
-    run: cohortextractor:latest generate_cohort --study-definition study_definition_symptom
-    outputs:
-      highly_sensitive:
-        cohort: output/input_symptom.csv
-
   generate_paired_cohort:
     run: cohortextractor:latest generate_cohort --study-definition study_definition_paired
     outputs:
@@ -25,7 +13,8 @@ actions:
 
   describe:
     run: python:latest python analysis/report.py
-    needs: [generate_referral_cohort, generate_symptom_cohort]
+    needs: [generate_paired_cohort]
     outputs:
       moderately_sensitive:
         all_figure: output/colorectal_cancer.jpg
+        all_table: output/colorectal_cancer_2.jpg
