@@ -1,39 +1,47 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np
 
-data = pd.read_csv("output/input_referral.csv")
+data = pd.read_csv("output/input_paired.csv")
 
-data2 = pd.read_csv("output/input_symptom.csv")
+data_symptom = data[["colorectal_symptom_1_date_symp_date", "colorectal_symptom_2_date_symp_date", "colorectal_symptom_3_date_symp_date", "colorectal_symptom_4_date_symp_date", "colorectal_symptom_5_date_symp_date", "colorectal_symptom_6_date_symp_date", "colorectal_symptom_7_date_symp_date", "colorectal_symptom_8_date_symp_date", "colorectal_symptom_9_date_symp_date", "colorectal_symptom_10_date_symp_date"]]
+data_referral = data[["colorectal_symptom_1_date_ref_date", "colorectal_symptom_2_date_ref_date", "colorectal_symptom_3_date_ref_date", "colorectal_symptom_4_date_ref_date", "colorectal_symptom_5_date_ref_date", "colorectal_symptom_6_date_ref_date", "colorectal_symptom_7_date_ref_date", "colorectal_symptom_8_date_ref_date", "colorectal_symptom_9_date_ref_date", "colorectal_symptom_10_date_ref_date"]]
 
-data['colorectal_referral_date'] = pd.to_datetime(data['colorectal_referral_date'])
+num_symptoms = data_symptom.count(axis=1)
 
-data2['colorectal_symptom_date'] = pd.to_datetime(data2['colorectal_symptom_date'])
-
-def time(x):
-    return x - pd.to_datetime('2020-03-23')
-
-data['colorectal_referral_time'] = data['colorectal_referral_date'].apply(time)
-
-data2['colorectal_symptom_time'] = data2['colorectal_symptom_date'].apply(time)
-
-fig = plt.figure()
-ax = fig.add_subplot(111)
-ax1 = fig.add_subplot(121)
-ax2 = fig.add_subplot(122)
-
-ax.spines['top'].set_color('none')
-ax.spines['bottom'].set_color('none')
-ax.spines['left'].set_color('none')
-ax.spines['right'].set_color('none')
-ax.tick_params(labelcolor='w', top=False, bottom=False, left=False, right=False)
-
-ax1.hist(data['colorectal_referral_time'].astype('timedelta64[D]').to_numpy(), bins = 48)
-ax2.hist(data2['colorectal_symptom_time'].astype('timedelta64[D]').to_numpy(), bins = 48)
-
-ax.set_xlabel('Time')
-ax.set_ylabel('Frequency')
-
-ax1.set_title('Referrals')
-ax2.set_title('Symptom presentations')
+plt.hist(num_symptoms.values.tolist(), bins=10)
 
 plt.savefig('output/colorectal_cancer.jpg')
+
+plt.clf()
+
+data_symptom['colorectal_symptom_1_date_symp_date'] = pd.to_datetime(data_symptom['colorectal_symptom_1_date_symp_date'])
+data_symptom['colorectal_symptom_2_date_symp_date'] = pd.to_datetime(data_symptom['colorectal_symptom_2_date_symp_date'])
+data_symptom['colorectal_symptom_3_date_symp_date'] = pd.to_datetime(data_symptom['colorectal_symptom_3_date_symp_date'])
+data_symptom['colorectal_symptom_4_date_symp_date'] = pd.to_datetime(data_symptom['colorectal_symptom_4_date_symp_date'])
+data_symptom['colorectal_symptom_5_date_symp_date'] = pd.to_datetime(data_symptom['colorectal_symptom_5_date_symp_date'])
+data_symptom['colorectal_symptom_6_date_symp_date'] = pd.to_datetime(data_symptom['colorectal_symptom_6_date_symp_date'])
+data_symptom['colorectal_symptom_7_date_symp_date'] = pd.to_datetime(data_symptom['colorectal_symptom_7_date_symp_date'])
+data_symptom['colorectal_symptom_8_date_symp_date'] = pd.to_datetime(data_symptom['colorectal_symptom_8_date_symp_date'])
+data_symptom['colorectal_symptom_9_date_symp_date'] = pd.to_datetime(data_symptom['colorectal_symptom_9_date_symp_date'])
+data_symptom['colorectal_symptom_10_date_symp_date'] = pd.to_datetime(data_symptom['colorectal_symptom_10_date_symp_date'])
+data_month_year_1 = data_symptom['colorectal_symptom_1_date_symp_date'].dt.to_period('M')
+data_month_year_2 = data_symptom['colorectal_symptom_2_date_symp_date'].dt.to_period('M')
+data_month_year_3 = data_symptom['colorectal_symptom_3_date_symp_date'].dt.to_period('M')
+data_month_year_4 = data_symptom['colorectal_symptom_4_date_symp_date'].dt.to_period('M')
+data_month_year_5 = data_symptom['colorectal_symptom_5_date_symp_date'].dt.to_period('M')
+data_month_year_6 = data_symptom['colorectal_symptom_6_date_symp_date'].dt.to_period('M')
+data_month_year_7 = data_symptom['colorectal_symptom_7_date_symp_date'].dt.to_period('M')
+data_month_year_8 = data_symptom['colorectal_symptom_8_date_symp_date'].dt.to_period('M')
+data_month_year_9 = data_symptom['colorectal_symptom_9_date_symp_date'].dt.to_period('M')
+data_month_year_10 = data_symptom['colorectal_symptom_10_date_symp_date'].dt.to_period('M')
+
+data_month_year = pd.concat([data_month_year_1, data_month_year_2, data_month_year_3, data_month_year_4, data_month_year_5, data_month_year_6, data_month_year_7, data_month_year_8, data_month_year_9, data_month_year_10], axis=1)
+
+counts = data_month_year.stack().value_counts()
+
+counts = counts.sort_index()
+
+ax = counts.plot.bar()
+
+plt.savefig('output/colorectal_cancer_2.jpg')
