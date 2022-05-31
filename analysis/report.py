@@ -75,6 +75,6 @@ counts_ref = data_ref_month_year.stack().value_counts()
 
 counts_ref = counts_ref.sort_index()
 
-ax_ref = counts_ref.plot.bar()
+ax = counts_ref.plot.bar()
 
 plt.savefig('output/colorectal_cancer_4.jpg')
