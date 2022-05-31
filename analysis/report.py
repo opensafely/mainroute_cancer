@@ -77,4 +77,4 @@ counts_ref = counts_ref.sort_index()
 
 ax = counts_ref.plot.bar()
 
-plt.savefig('output/colorectal_cancer_4.jpg')
+plt.savefig('output/colorectal_cancer_3.jpg')
