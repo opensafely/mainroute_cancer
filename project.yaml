@@ -18,5 +18,5 @@ actions:
       moderately_sensitive:
         all_figure: output/colorectal_cancer.jpg
         all_figure2: output/colorectal_cancer_2.jpg
-        all_figure3: output/colorectal_cancer_3.jpg
-        all_figure4: output/colorectal_cancer_4.jpg
+        all_figure5: output/colorectal_cancer_5.jpg
+        all_figure6: output/colorectal_cancer_6.jpg
