@@ -6,7 +6,7 @@ start_date = "2018-03-23"
 end_date = "2022-03-23"
 
 
-def colorectal_symp_ref_date_X(name, symp_codelist, ref_codelist, diag_codelist, index_date, n, ref_window_weeks=6):
+def colorectal_symp_ref_date_X(name, symp_codelist, ref_codelist, diag_codelist, index_date, n, ref_window_weeks):
   def var_signature(
     name,
     symp_codelist,
