@@ -18,7 +18,7 @@ def colorectal_symp_ref_date_X(name, symp_codelist, ref_codelist, diag_codelist,
     ref_date = f"{name}_ref_date"
     diag_date = f"{name}_diag_date"
     symp_on_or_after = on_or_after
-    ref_on_or_before = (datetime.strptime("2020-01-01","%Y-%m-%d")+timedelta(weeks=ref_window_weeks)).strftime("%Y-%m-%d")
+    ref_on_or_before = (datetime.strptime("2022-03-23","%Y-%m-%d")+timedelta(weeks=ref_window_weeks)).strftime("%Y-%m-%d")
     return {
       symp_date: patients.with_these_clinical_events(
         symp_codelist,
