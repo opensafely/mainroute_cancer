@@ -6,7 +6,7 @@ start_date = "2018-03-23"
 end_date = "2022-03-23"
 
 
-def colorectal_symp_ref_date_X(name, symp_codelist, ref_codelist, diag_codelist, index_date, n, ref_window_weeks):
+def colorectal_symp_ref_date_X(name, symp_codelist, ref_codelist, diag_codelist, index_date, n, ref_window_weeks, diag_window_weeks):
   def var_signature(
     name,
     symp_codelist,
@@ -19,6 +19,7 @@ def colorectal_symp_ref_date_X(name, symp_codelist, ref_codelist, diag_codelist,
     diag_date = f"{name}_diag_date"
     symp_on_or_after = on_or_after
     ref_on_or_before = (datetime.strptime("2022-03-23","%Y-%m-%d")+timedelta(weeks=ref_window_weeks)).strftime("%Y-%m-%d")
+    diag_on_or_before = (datetime.strptime("2022-03-23","%Y-%m-%d")+timedelta(weeks=diag_window_weeks)).strftime("%Y-%m-%d")
     return {
       symp_date: patients.with_these_clinical_events(
         symp_codelist,
@@ -37,7 +38,7 @@ def colorectal_symp_ref_date_X(name, symp_codelist, ref_codelist, diag_codelist,
       diag_date: patients.admitted_to_hospital(
         with_these_diagnoses=diag_codelist,
         returning="date_admitted",
-        on_or_after=symp_on_or_after,
+        between=[symp_on_or_after,diag_on_or_before],
         find_first_match_in_period=True,
         date_format="YYYY-MM-DD"
       )
@@ -77,5 +78,6 @@ study = StudyDefinition(
         index_date = "2018-02-23",
         n = 6,
         ref_window_weeks = 6,
+        diag_window_weeks = 18,
     )
 )
