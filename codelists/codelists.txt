@@ -5,3 +5,5 @@ phc/symptom-colorectal-cibh/3062fdc2
 phc/symptom-colorectal-pr-bleeding/17538a8d
 phc/symptom-colorectal-anaemia/7e441757
 phc/colorectal-cancer-icd10/3315bdb8
+phc/phc-colorectal-cancer-snomed/3925b63c
+phc/phc-colorectal-cancer-ctv3/0706cfd2
