@@ -4,19 +4,18 @@ expectations:
   population_size: 1000
 
 actions:
-
-  generate_paired_cohort:
-    run: cohortextractor:latest generate_cohort --study-definition study_definition_paired
+  
+  generate_basereferral_cohort:
+    run: cohortextractor:latest generate_cohort --study-definition study_definition_basereferral
     outputs:
       highly_sensitive:
-        cohort: output/input_paired.csv
+        cohort: output/input_basereferral.csv
 
   describe:
-    run: python:latest python analysis/report.py
-    needs: [generate_paired_cohort]
+    run: python:latest python analysis/report_basereferral.py
+    needs: [generate_basereferral_cohort]
     outputs:
       moderately_sensitive:
-        all_figure: output/colorectal_cancer.jpg
-        all_figure2: output/colorectal_cancer_2.jpg
-        all_figure5: output/colorectal_cancer_5.jpg
-        all_figure6: output/colorectal_cancer_6.jpg
+        all_figure: output/colorectal_cancer_7.jpg
+        all_figure2: output/colorectal_cancer_8.jpg
+        all_figure5: output/colorectal_cancer_9.jpg
