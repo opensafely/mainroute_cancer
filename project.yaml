@@ -5,17 +5,20 @@ expectations:
 
 actions:
   
-  generate_basereferral_cohort:
-    run: cohortextractor:latest generate_cohort --study-definition study_definition_basereferral
+  generate_2wwcolorectal_cohort:
+    run: cohortextractor:latest generate_cohort --study-definition study_definition_2wwcolorectal
     outputs:
       highly_sensitive:
-        cohort: output/input_basereferral.csv
+        cohort: output/input_2wwcolorectal.csv
 
   describe:
-    run: python:latest python analysis/report_basereferral.py
-    needs: [generate_basereferral_cohort]
+    run: python:latest python analysis/report_2wwcolorectal.py
+    needs: [generate_2wwcolorectal_cohort]
     outputs:
       moderately_sensitive:
-        all_figure: output/colorectal_cancer_7.jpg
-        all_figure2: output/colorectal_cancer_8.jpg
-        all_figure5: output/colorectal_cancer_9.jpg
+        all_figure: output/colorectal_cancer_10.jpg
+        all_figure2: output/colorectal_cancer_11.jpg
+        all_figure3: output/colorectal_cancer_12.jpg
+        all_figure4: output/colorectal_cancer_13.jpg
+        all_figure5: output/colorectal_cancer_14.jpg
+        all_figure6: output/colorectal_cancer_15.jpg
