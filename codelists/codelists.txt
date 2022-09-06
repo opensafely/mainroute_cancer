@@ -7,3 +7,4 @@ phc/symptom-colorectal-anaemia/7e441757
 phc/colorectal-cancer-icd10/3315bdb8
 phc/phc-colorectal-cancer-snomed/3925b63c
 phc/phc-colorectal-cancer-ctv3/0706cfd2
+phc/fit-test/2697b2ce
