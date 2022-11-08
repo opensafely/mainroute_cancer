@@ -27,7 +27,7 @@ study = StudyDefinition(
         
     colorectal_diagnosis_date=patients.with_these_clinical_events(
         colorectal_diagnosis_codes_snomed,
-        between=["colorectal_referral_date", "colorectal_referral_date + 126 days"],
+        between=["colorectal_referral_date", "colorectal_referral_date + 122 days"],
         returning="date",
         date_format="YYYY-MM-DD",
         find_first_match_in_period=True,
@@ -72,4 +72,14 @@ study = StudyDefinition(
         date_format="YYYY-MM-DD",
         find_last_match_in_period=True,
     ),
+
+    age=patients.age_as_of(
+        "colorectal_referral_date", 
+        return_expectations={"rate" : "universal", "int" : {"distribution" : "population_ages"}},
+    ),
+
+    sex=patients.sex(
+        return_expectations={"rate": "universal", "category": {"ratios": {"M": 0.5, "F": 0.5}}},
+    ),
+
 )
