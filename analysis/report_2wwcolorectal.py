@@ -4,18 +4,6 @@ import numpy as np
 
 data = pd.read_csv("output/input_2wwcolorectal.csv")
 
-def ageband(x):
-    if (x < 40):
-        return 1
-    elif ((x >= 40) & (x < 60)):
-        return 2
-    elif ((x >= 60) & (x < 80)):
-        return 3
-    elif (x >= 80):
-        return 4
-
-data['ageband'] = data['age'].apply(ageband)
-
 ########## diagnosis conversion plot ##########
 data_null = data.notnull()
 
@@ -85,8 +73,10 @@ plt.clf()
 ########## anaemia symptom plot ##########
 data_null = data.notnull()
 
+data.loc[data["age"]<60, "anaemia_symptom_date"] = ""
+
 def condition3(s):
-    if s['colorectal_referral_date'] & s['anaemia_symptom_date'] & s['age']>=60:
+    if s['colorectal_referral_date'] & s['anaemia_symptom_date']:
         return 1
     else:
         return 0
@@ -118,8 +108,10 @@ plt.clf()
 ########## CIBH symptom plot ##########
 data_null = data.notnull()
 
+data.loc[data["age"]<60, "cibh_symptom_date"] = ""
+
 def condition4(s):
-    if s['colorectal_referral_date'] & s['cibh_symptom_date'] & s['age']>=60:
+    if s['colorectal_referral_date'] & s['cibh_symptom_date']:
         return 1
     else:
         return 0
@@ -151,8 +143,10 @@ plt.clf()
 ########## PR bleeding symptom plot ##########
 data_null = data.notnull()
 
+data.loc[data["age"]<50, "prbleeding_symptom_date"] = ""
+
 def condition5(s):
-    if s['colorectal_referral_date'] & s['prbleeding_symptom_date'] & s['age']>=50:
+    if s['colorectal_referral_date'] & s['prbleeding_symptom_date']:
         return 1
     else:
         return 0
@@ -184,8 +178,10 @@ plt.clf()
 ########## weight loss symptom plot ##########
 data_null = data.notnull()
 
+data.loc[data["age"]<40, "wl_symptom_date"] = ""
+
 def condition6(s):
-    if s['colorectal_referral_date'] & s['wl_symptom_date'] & s['age']>=40:
+    if s['colorectal_referral_date'] & s['wl_symptom_date']:
         return 1
     else:
         return 0
@@ -272,16 +268,18 @@ plt.clf()
 ########## diagnosis conversion <40 plot ##########
 data_null = data.notnull()
 
+data_40 = data[data['age']<40]
+
 def condition7(s):
-    if s['colorectal_referral_date'] & s['colorectal_diagnosis_date'] & s['ageband']==1:
+    if s['colorectal_referral_date'] & s['colorectal_diagnosis_date']:
         return 1
     else:
         return 0
 
-data['colorectal_conversion_1'] = data_null.apply(condition7, axis=1)
+data_40['colorectal_conversion_2'] = data_null.apply(condition7, axis=1)
 
-data_referral_conversion = data[['colorectal_referral_date', 'colorectal_conversion_1']]
-data_referral_conversion = data_referral_conversion.rename(columns={"colorectal_referral_date":"referral_date", "colorectal_conversion_1":"conversion"})
+data_referral_conversion = data_40[['colorectal_referral_date', 'colorectal_conversion_2']]
+data_referral_conversion = data_referral_conversion.rename(columns={"colorectal_referral_date":"referral_date", "colorectal_conversion_2":"conversion"})
 data_referral_conversion['referral_date'] = pd.to_datetime(data_referral_conversion['referral_date'])
 data_referral_conversion['referral_date'] = data_referral_conversion['referral_date'].dt.to_period('M')
 
@@ -305,16 +303,18 @@ plt.clf()
 ########## diagnosis conversion 40-60 plot ##########
 data_null = data.notnull()
 
+data_60 = data[(data['age']>=40) & (data['age']<60)]
+
 def condition8(s):
-    if s['colorectal_referral_date'] & s['colorectal_diagnosis_date'] & s['ageband']==2:
+    if s['colorectal_referral_date'] & s['colorectal_diagnosis_date']:
         return 1
     else:
         return 0
 
-data['colorectal_conversion_1'] = data_null.apply(condition8, axis=1)
+data_60['colorectal_conversion_3'] = data_null.apply(condition8, axis=1)
 
-data_referral_conversion = data[['colorectal_referral_date', 'colorectal_conversion_1']]
-data_referral_conversion = data_referral_conversion.rename(columns={"colorectal_referral_date":"referral_date", "colorectal_conversion_1":"conversion"})
+data_referral_conversion = data_60[['colorectal_referral_date', 'colorectal_conversion_3']]
+data_referral_conversion = data_referral_conversion.rename(columns={"colorectal_referral_date":"referral_date", "colorectal_conversion_3":"conversion"})
 data_referral_conversion['referral_date'] = pd.to_datetime(data_referral_conversion['referral_date'])
 data_referral_conversion['referral_date'] = data_referral_conversion['referral_date'].dt.to_period('M')
 
@@ -338,16 +338,18 @@ plt.clf()
 ########## diagnosis conversion 60-80 plot ##########
 data_null = data.notnull()
 
+data_80 = data[(data['age']>=60) & (data['age']<80)]
+
 def condition9(s):
-    if s['colorectal_referral_date'] & s['colorectal_diagnosis_date'] & s['ageband']==3:
+    if s['colorectal_referral_date'] & s['colorectal_diagnosis_date']:
         return 1
     else:
         return 0
 
-data['colorectal_conversion_1'] = data_null.apply(condition9, axis=1)
+data_80['colorectal_conversion_4'] = data_null.apply(condition9, axis=1)
 
-data_referral_conversion = data[['colorectal_referral_date', 'colorectal_conversion_1']]
-data_referral_conversion = data_referral_conversion.rename(columns={"colorectal_referral_date":"referral_date", "colorectal_conversion_1":"conversion"})
+data_referral_conversion = data_80[['colorectal_referral_date', 'colorectal_conversion_4']]
+data_referral_conversion = data_referral_conversion.rename(columns={"colorectal_referral_date":"referral_date", "colorectal_conversion_4":"conversion"})
 data_referral_conversion['referral_date'] = pd.to_datetime(data_referral_conversion['referral_date'])
 data_referral_conversion['referral_date'] = data_referral_conversion['referral_date'].dt.to_period('M')
 
@@ -371,16 +373,18 @@ plt.clf()
 ########## diagnosis conversion 80+ plot ##########
 data_null = data.notnull()
 
+data_80plus = data[data['age']>=80]
+
 def condition10(s):
-    if s['colorectal_referral_date'] & s['colorectal_diagnosis_date'] & s['ageband']==4:
+    if s['colorectal_referral_date'] & s['colorectal_diagnosis_date']:
         return 1
     else:
         return 0
 
-data['colorectal_conversion_1'] = data_null.apply(condition10, axis=1)
+data_80plus['colorectal_conversion_5'] = data_null.apply(condition10, axis=1)
 
-data_referral_conversion = data[['colorectal_referral_date', 'colorectal_conversion_1']]
-data_referral_conversion = data_referral_conversion.rename(columns={"colorectal_referral_date":"referral_date", "colorectal_conversion_1":"conversion"})
+data_referral_conversion = data_80plus[['colorectal_referral_date', 'colorectal_conversion_5']]
+data_referral_conversion = data_referral_conversion.rename(columns={"colorectal_referral_date":"referral_date", "colorectal_conversion_5":"conversion"})
 data_referral_conversion['referral_date'] = pd.to_datetime(data_referral_conversion['referral_date'])
 data_referral_conversion['referral_date'] = data_referral_conversion['referral_date'].dt.to_period('M')
 
