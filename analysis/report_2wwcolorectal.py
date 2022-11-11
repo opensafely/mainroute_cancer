@@ -382,3 +382,111 @@ plt.bar(range(len(dict)), list(dict.values()), tick_label=list(dict.keys()))
 plt.savefig('output/colorectal_cancer_20.jpg')
 
 plt.clf()
+
+########## anaemia_all symptom plot ##########
+#data_null = data.notnull()
+
+#data.loc[data["age"]<60, "anaemia_symptom_date"] = ""
+
+data_anaemia2_rate = data[['colorectal_referral_date', 'anaemia_symptom_flag']]
+data_anaemia2_rate = data_anaemia2_rate.rename(columns={"colorectal_referral_date":"referral_date", "anaemia_symptom_flag":"anaemia_rate"})
+data_anaemia2_rate['referral_date'] = pd.to_datetime(data_anaemia2_rate['referral_date'])
+data_anaemia2_rate['referral_date'] = data_anaemia2_rate['referral_date'].dt.to_period('M')
+
+unique_dates = data_anaemia2_rate['referral_date'].unique()
+
+unique_dates = sorted(unique_dates)
+
+dict = {}
+
+for item in unique_dates:
+    df = data_anaemia2_rate.loc[data_anaemia2_rate['referral_date'] == item]
+    con = df['anaemia_rate'].mean()
+    dict.update({item: con})
+
+plt.bar(range(len(dict)), list(dict.values()), tick_label=list(dict.keys()))
+
+plt.savefig('output/colorectal_cancer_21.jpg')
+
+plt.clf()
+
+########## CIBH_all symptom plot ##########
+#data_null = data.notnull()
+
+#data.loc[data["age"]<60, "cibh_symptom_date"] = ""
+
+data_cibh2_rate = data[['colorectal_referral_date', 'cibh_symptom_flag']]
+data_cibh2_rate = data_cibh2_rate.rename(columns={"colorectal_referral_date":"referral_date", "cibh_symptom_flag":"cibh_rate"})
+data_cibh2_rate['referral_date'] = pd.to_datetime(data_cibh2_rate['referral_date'])
+data_cibh2_rate['referral_date'] = data_cibh2_rate['referral_date'].dt.to_period('M')
+
+unique_dates = data_cibh2_rate['referral_date'].unique()
+
+unique_dates = sorted(unique_dates)
+
+dict = {}
+
+for item in unique_dates:
+    df = data_cibh2_rate.loc[data_cibh2_rate['referral_date'] == item]
+    con = df['cibh_rate'].mean()
+    dict.update({item: con})
+
+plt.bar(range(len(dict)), list(dict.values()), tick_label=list(dict.keys()))
+
+plt.savefig('output/colorectal_cancer_22.jpg')
+
+plt.clf()
+
+########## PR bleeding_all symptom plot ##########
+#data_null = data.notnull()
+
+#data.loc[data["age"]<50, "prbleeding_symptom_date"] = ""
+
+data_prbleeding2_rate = data[['colorectal_referral_date', 'prbleeding_symptom_flag']]
+data_prbleeding2_rate = data_prbleeding2_rate.rename(columns={"colorectal_referral_date":"referral_date", "prbleeding_symptom_flag":"prbleeding_rate"})
+data_prbleeding2_rate['referral_date'] = pd.to_datetime(data_prbleeding2_rate['referral_date'])
+data_prbleeding2_rate['referral_date'] = data_prbleeding2_rate['referral_date'].dt.to_period('M')
+
+unique_dates = data_prbleeding2_rate['referral_date'].unique()
+
+unique_dates = sorted(unique_dates)
+
+dict = {}
+
+for item in unique_dates:
+    df = data_prbleeding2_rate.loc[data_prbleeding2_rate['referral_date'] == item]
+    con = df['prbleeding_rate'].mean()
+    dict.update({item: con})
+
+plt.bar(range(len(dict)), list(dict.values()), tick_label=list(dict.keys()))
+
+plt.savefig('output/colorectal_cancer_23.jpg')
+
+plt.clf()
+
+########## weight loss_all symptom plot ##########
+#data_null = data.notnull()
+
+#data.loc[data["age"]<40, "wl_symptom_date"] = ""
+
+data_wl2_rate = data[['colorectal_referral_date', 'wl_symptom_flag']]
+data_wl2_rate = data_wl2_rate.rename(columns={"colorectal_referral_date":"referral_date", "wl_symptom_flag":"wl_rate"})
+data_wl2_rate['referral_date'] = pd.to_datetime(data_wl2_rate['referral_date'])
+data_wl2_rate['referral_date'] = data_wl2_rate['referral_date'].dt.to_period('M')
+
+unique_dates = data_wl2_rate['referral_date'].unique()
+
+unique_dates = sorted(unique_dates)
+
+dict = {}
+
+for item in unique_dates:
+    df = data_wl2_rate.loc[data_wl2_rate['referral_date'] == item]
+    con = df['wl_rate'].mean()
+    dict.update({item: con})
+
+plt.bar(range(len(dict)), list(dict.values()), tick_label=list(dict.keys()))
+
+plt.savefig('output/colorectal_cancer_24.jpg')
+
+plt.clf()
