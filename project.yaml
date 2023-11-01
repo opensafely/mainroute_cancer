@@ -5,29 +5,15 @@ expectations:
 
 actions:
   
-  generate_2wwcolorectal_cohort:
-    run: cohortextractor:latest generate_cohort --study-definition study_definition_2wwcolorectal
+  generate_study_population:
+    run: cohortextractor:latest generate_cohort --study-definition study_definition_lowerGI --index-date-range "2018-03-01 to today by month" --skip-existing --output-dir=output/measures --output-format=csv.gz
     outputs:
       highly_sensitive:
-        cohort: output/input_2wwcolorectal.csv
+        cohort: output/measures/input_*.csv.gz
 
-  describe:
-    run: python:latest python analysis/report_2wwcolorectal.py
-    needs: [generate_2wwcolorectal_cohort]
+  generate_measures:
+    run: cohortextractor:latest generate_measures --study-definition study_definition_lowerGI --skip-existing --output-dir=output/measures
+    needs: [generate_study_population]
     outputs:
       moderately_sensitive:
-        all_figure: output/colorectal_cancer_10.jpg
-        all_figure2: output/colorectal_cancer_11.jpg
-        all_figure3: output/colorectal_cancer_12.jpg
-        all_figure4: output/colorectal_cancer_13.jpg
-        all_figure5: output/colorectal_cancer_14.jpg
-        all_figure6: output/colorectal_cancer_15.jpg
-        all_figure7: output/colorectal_cancer_16.jpg
-        all_figure8: output/colorectal_cancer_17.jpg
-        all_figure9: output/colorectal_cancer_18.jpg
-        all_figure10: output/colorectal_cancer_19.jpg
-        all_figure11: output/colorectal_cancer_20.jpg
-        all_figure12: output/colorectal_cancer_21.jpg
-        all_figure13: output/colorectal_cancer_22.jpg
-        all_figure14: output/colorectal_cancer_23.jpg
-        all_figure15: output/colorectal_cancer_24.jpg
+        measure_csv: output/measures/measure_*.csv
