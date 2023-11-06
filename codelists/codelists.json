@@ -30,10 +30,10 @@
       "downloaded_at": "2022-05-10 19:36:44.250490Z",
       "sha": "7d5ea9520c325592d069695e1f0ec4825897231b"
     },
-    "phc-symptom-colorectal-anaemia.csv": {
-      "id": "phc/symptom-colorectal-anaemia/7e441757",
-      "url": "https://codelists.opensafely.org/codelist/phc/symptom-colorectal-anaemia/7e441757/",
-      "downloaded_at": "2022-05-10 19:36:44.608241Z",
+    "phc-symptom-colorectal-ida.csv": {
+      "id": "phc/symptom-colorectal-ida/7e441757",
+      "url": "https://codelists.opensafely.org/codelist/phc/symptom-colorectal-ida/7e441757/",
+      "downloaded_at": "2023-11-05 16:31:35.436134Z",
       "sha": "79868f76c623c171da5bd933d52bd8919e6dc91d"
     },
     "phc-colorectal-cancer-icd10.csv": {
@@ -59,6 +59,30 @@
       "url": "https://codelists.opensafely.org/codelist/phc/fit-test/2697b2ce/",
       "downloaded_at": "2022-09-06 18:27:58.830768Z",
       "sha": "80b13cf53905e112d1c2b1c5546682bf3fa9b942"
+    },
+    "phc-symptom-lowergi-abdo-mass.csv": {
+      "id": "phc/symptom-lowergi-abdo-mass/154bce96",
+      "url": "https://codelists.opensafely.org/codelist/phc/symptom-lowergi-abdo-mass/154bce96/",
+      "downloaded_at": "2023-11-05 16:31:45.446549Z",
+      "sha": "6f9a320b1a8b71974a50417ada813dd65f746ba1"
+    },
+    "phc-symptom-lowergi-abdo-pain.csv": {
+      "id": "phc/symptom-lowergi-abdo-pain/632ce82b",
+      "url": "https://codelists.opensafely.org/codelist/phc/symptom-lowergi-abdo-pain/632ce82b/",
+      "downloaded_at": "2023-11-05 16:31:46.971433Z",
+      "sha": "9d277ef515af02116e59f6b2cef3e0623e4df479"
+    },
+    "phc-symptom-lowergi-anaemia.csv": {
+      "id": "phc/symptom-lowergi-anaemia/4a1d74f6",
+      "url": "https://codelists.opensafely.org/codelist/phc/symptom-lowergi-anaemia/4a1d74f6/",
+      "downloaded_at": "2023-11-05 16:31:49.284509Z",
+      "sha": "22f5981097f14245c482884160a7fa8607ca73fc"
+    },
+    "opensafely-ethnicity.csv": {
+      "id": "opensafely/ethnicity/2020-04-27",
+      "url": "https://codelists.opensafely.org/codelist/opensafely/ethnicity/2020-04-27/",
+      "downloaded_at": "2023-11-06 00:33:44.027671Z",
+      "sha": "3d2f3998b71863a80b24d60f6f4282e14191ae13"
     }
   }
 }
