@@ -20,21 +20,21 @@ study = StudyDefinition(
 
     population=patients.satisfying(
         'registered AND (age >=18 AND age <= 110) AND (NOT died) AND (NOT prev_colorectal_ca_diagnosis)',
-        registered=patients.registered_as_of("index_date + 15 days"),
+        registered=patients.registered_as_of("last_day_of_month(index_date) + 7 days"),
         died=patients.died_from_any_cause(
-            on_or_before="index_date",
+            on_or_before="index_date + 22 days",
             returning="binary_flag",
             return_expectations={"incidence": 0.01},
         ),
         prev_colorectal_ca_diagnosis=patients.with_these_clinical_events(
             colorectal_diagnosis_codes_snomed,
-            on_or_before="index_date",
+            on_or_before="index_date + 22 days",
             returning="binary_flag",
         ),
     ),
     
     age=patients.age_as_of(
-        "index_date",
+        "index_date + 22 days",
         return_expectations={"rate" : "universal", "int" : {"distribution" : "population_ages"}},
     ),
 
@@ -71,7 +71,7 @@ study = StudyDefinition(
             ethnicity_codes,
             returning="category",
             find_last_match_in_period=True,
-            on_or_before="index_date",
+            on_or_before="index_date + 22 days",
             return_expectations={
             "category": {"ratios": {"1": 0.4, "2": 0.4, "3": 0.2, "4":0.2,"5": 0.2}},
             "incidence": 0.75,
@@ -81,17 +81,17 @@ study = StudyDefinition(
 
     exit_date=patients.minimum_of(
         death_date=patients.died_from_any_cause(
-            between=["index_date", "last_day_of_month(index_date)"],
+            between=["index_date + 22 days", "last_day_of_month(index_date) + 22 days"],
             returning="date_of_death",
             date_format="YYYY-MM-DD",
         ),
         dereg_date=patients.date_deregistered_from_all_supported_practices(
-            between=["index_date", "last_day_of_month(index_date)"],
+            between=["index_date + 22 days", "last_day_of_month(index_date) + 22 days"],
             date_format="YYYY-MM-DD",
         ),
         colorectal_ca_diagnosis_any_date=patients.with_these_clinical_events(
             colorectal_diagnosis_codes_snomed,
-            between=["index_date", "last_day_of_month(index_date)"],
+            between=["index_date + 22 days", "last_day_of_month(index_date) + 22 days"],
             returning="date",
             date_format="YYYY-MM-DD",
             find_first_match_in_period=True,
@@ -101,7 +101,7 @@ study = StudyDefinition(
 
     lowerGI_condition_1=patients.with_these_clinical_events(
         abdomass_codes,
-        between=["index_date", "last_day_of_month(index_date)"],
+        between=["index_date + 22 days", "last_day_of_month(index_date) + 22 days"],
         returning="binary_flag",
         find_first_match_in_period=True,
         return_binary_flag=None,
@@ -143,7 +143,7 @@ study = StudyDefinition(
 
     lowerGI_condition_2=patients.with_these_clinical_events(
         cibh_codes,
-        between=["index_date", "last_day_of_month(index_date)"],
+        between=["index_date + 22 days", "last_day_of_month(index_date) + 22 days"],
         returning="binary_flag",
         find_first_match_in_period=True,
         return_binary_flag=None,
@@ -185,7 +185,7 @@ study = StudyDefinition(
 
     lowerGI_condition_3=patients.with_these_clinical_events(
         ida_codes,
-        between=["index_date", "last_day_of_month(index_date)"],
+        between=["index_date + 22 days", "last_day_of_month(index_date) + 22 days"],
         returning="binary_flag",
         find_first_match_in_period=True,
         return_binary_flag=None,
@@ -229,24 +229,24 @@ study = StudyDefinition(
         'weight_loss AND abdo_pain AND age >= 40',
         weight_loss=patients.with_these_clinical_events(
             wl_codes,
-            between=["index_date", "last_day_of_month(index_date)"],
+            between=["index_date + 22 days", "last_day_of_month(index_date) + 22 days"],
         ),
         abdo_pain=patients.with_these_clinical_events(
             abdopain_codes,
-            between=["index_date", "last_day_of_month(index_date)"],
+            between=["index_date + 22 days", "last_day_of_month(index_date) + 22 days"],
         ),
     ),
     lowerGI_condition_4_date=patients.minimum_of(
         weight_loss_date_4=patients.with_these_clinical_events(
             wl_codes,
-            between=["index_date", "last_day_of_month(index_date)"],
+            between=["index_date + 22 days", "last_day_of_month(index_date) + 22 days"],
             returning="date",
             date_format="YYYY-MM-DD",
             find_first_match_in_period=True,
         ),
         abdo_pain_date_4=patients.with_these_clinical_events(
             abdopain_codes,
-            between=["index_date", "last_day_of_month(index_date)"],
+            between=["index_date + 22 days", "last_day_of_month(index_date) + 22 days"],
             returning="date",
             date_format="YYYY-MM-DD",
             find_first_match_in_period=True,
@@ -289,20 +289,20 @@ study = StudyDefinition(
         'pr_bleed AND age < 50 AND abdo_pain',
         pr_bleed=patients.with_these_clinical_events(
             prbleeding_codes,
-            between=["index_date", "last_day_of_month(index_date)"],
+            between=["index_date + 22 days", "last_day_of_month(index_date) + 22 days"],
         ),
     ),
     lowerGI_condition_5_date=patients.minimum_of(
         abdo_pain_date_5=patients.with_these_clinical_events(
             abdopain_codes,
-            between=["index_date", "last_day_of_month(index_date)"],
+            between=["index_date + 22 days", "last_day_of_month(index_date) + 22 days"],
             returning="date",
             date_format="YYYY-MM-DD",
             find_first_match_in_period=True,
         ),
         pr_bleed_date_5=patients.with_these_clinical_events(
             prbleeding_codes,
-            between=["index_date", "last_day_of_month(index_date)"],
+            between=["index_date + 22 days", "last_day_of_month(index_date) + 22 days"],
             returning="date",
             date_format="YYYY-MM-DD",
             find_first_match_in_period=True,
@@ -345,14 +345,14 @@ study = StudyDefinition(
     lowerGI_condition_6_date=patients.minimum_of(
         weight_loss_date_6=patients.with_these_clinical_events(
             wl_codes,
-            between=["index_date", "last_day_of_month(index_date)"],
+            between=["index_date + 22 days", "last_day_of_month(index_date) + 22 days"],
             returning="date",
             date_format="YYYY-MM-DD",
             find_first_match_in_period=True,
         ), 
         pr_bleed_date_6=patients.with_these_clinical_events(
             prbleeding_codes,
-            between=["index_date", "last_day_of_month(index_date)"],
+            between=["index_date + 22 days", "last_day_of_month(index_date) + 22 days"],
             returning="date",
             date_format="YYYY-MM-DD",
             find_first_match_in_period=True,
@@ -394,7 +394,7 @@ study = StudyDefinition(
     lowerGI_condition_7=patients.satisfying('age >=50 AND pr_bleed'),
     lowerGI_condition_7_date=patients.with_these_clinical_events(
         prbleeding_codes,
-        between=["index_date", "last_day_of_month(index_date)"],
+        between=["index_date + 22 days", "last_day_of_month(index_date) + 22 days"],
         returning="date",
         date_format="YYYY-MM-DD",
         find_first_match_in_period=True,
@@ -435,7 +435,7 @@ study = StudyDefinition(
     lowerGI_condition_8=patients.satisfying('age >=50 AND abdo_pain'),
     lowerGI_condition_8_date=patients.with_these_clinical_events(
         abdopain_codes,
-        between=["index_date", "last_day_of_month(index_date)"],
+        between=["index_date + 22 days", "last_day_of_month(index_date) + 22 days"],
         returning="date",
         date_format="YYYY-MM-DD",
         find_first_match_in_period=True,
@@ -476,7 +476,7 @@ study = StudyDefinition(
     lowerGI_condition_9=patients.satisfying('age >=50 AND weight_loss'),
     lowerGI_condition_9_date=patients.with_these_clinical_events(
         wl_codes,
-        between=["index_date", "last_day_of_month(index_date)"],
+        between=["index_date + 22 days", "last_day_of_month(index_date) + 22 days"],
         returning="date",
         date_format="YYYY-MM-DD",
         find_first_match_in_period=True,
@@ -518,12 +518,12 @@ study = StudyDefinition(
         'age >=60 AND anaemia',
         anaemia=patients.with_these_clinical_events(
             anaemia_codes,
-            between=["index_date", "last_day_of_month(index_date)"],
+            between=["index_date + 22 days", "last_day_of_month(index_date) + 22 days"],
         ),
     ),
     lowerGI_condition_10_date=patients.with_these_clinical_events(
         anaemia_codes,
-        between=["index_date", "last_day_of_month(index_date)"],
+        between=["index_date + 22 days", "last_day_of_month(index_date) + 22 days"],
         returning="date",
         date_format="YYYY-MM-DD",
         find_first_match_in_period=True,
