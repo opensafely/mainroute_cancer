@@ -1,6 +1,6 @@
 # mainroute_cancer
 
-[View on OpenSAFELY](https://github.com/opensafely/mainroute_cancer)
+[View on OpenSAFELY](https://jobs.opensafely.org/mainroute/mainroute_cancer/)
 
 Details of the purpose and any published outputs from this project can be found at the link above.
 
