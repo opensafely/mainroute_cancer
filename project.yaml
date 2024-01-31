@@ -23,3 +23,13 @@ actions:
     outputs:
       moderately_sensitive:
         measure_csv: output/measures/measures_demo.csv
+
+  measures_demo_imd:
+    run: ehrql:v1 generate-measures analysis/measures_demo_imd.py
+      --output output/measures/measures_demo_imd.csv
+      --
+      --start-date "2018-03-23"
+      --intervals 67
+    outputs:
+      moderately_sensitive:
+        measure_csv: output/measures/measures_demo_imd.csv
