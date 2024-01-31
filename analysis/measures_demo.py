@@ -28,15 +28,6 @@ dataset = make_dataset_lowerGI(index_date=index_date, end_date=INTERVAL.end_date
 
 dataset.elig_cohort = dataset.entry_date.is_on_or_before(INTERVAL.end_date) & dataset.exit_date.is_after(index_date)
 
-period_entry = maximum_of(index_date, dataset.entry_date)
-period_exit = minimum_of(INTERVAL.end_date, dataset.exit_date)
-
-follow_up_years = (period_exit - period_entry).years
-
-elig_follow_up_years = case(
-        when(dataset.elig_cohort).then(follow_up_years)
-)
-
 ##########
 
 ## Define demographic variables
@@ -96,55 +87,69 @@ measures.define_defaults(intervals=months(intervals).starting_on(start_date))
 measures.define_measure(
     name="fit_test_rate", 
     numerator=dataset.fit_test_any,
-    denominator=elig_follow_up_years,
+    denominator=dataset.elig_cohort,
     group_by={"imd": imd5}
     )
 
 measures.define_measure(
     name="ida_symp_rate", 
     numerator=dataset.ida_symp,
-    denominator=elig_follow_up_years,
+    denominator=dataset.elig_cohort,
     group_by={"imd": imd5}
     )
 
 measures.define_measure(
     name="cibh_symp_rate", 
     numerator=dataset.cibh_symp,
-    denominator=elig_follow_up_years,
+    denominator=dataset.elig_cohort,
     group_by={"imd": imd5}
     )
 
 measures.define_measure(
     name="abdomass_symp_rate", 
     numerator=dataset.abdomass_symp,
-    denominator=elig_follow_up_years,
+    denominator=dataset.elig_cohort,
     group_by={"imd": imd5}
     )
 
 measures.define_measure(
     name="prbleed_symp_50_rate", 
     numerator=dataset.prbleed_symp_50,
-    denominator=elig_follow_up_years,
+    denominator=dataset.elig_cohort,
     group_by={"imd": imd5}
     )
 
 measures.define_measure(
     name="wl_symp_50_rate", 
     numerator=dataset.wl_symp_50,
-    denominator=elig_follow_up_years,
+    denominator=dataset.elig_cohort,
     group_by={"imd": imd5}
     )
 
 measures.define_measure(
     name="abdopain_symp_50_rate", 
     numerator=dataset.abdopain_symp_50,
-    denominator=elig_follow_up_years,
+    denominator=dataset.elig_cohort,
     group_by={"imd": imd5}
     )
 
 measures.define_measure(
     name="anaemia_symp_60_rate", 
     numerator=dataset.anaemia_symp_60,
-    denominator=elig_follow_up_years,
+    denominator=dataset.elig_cohort,
+    group_by={"imd": imd5}
+    )
+
+measures.define_measure(
+    name="fit_6_rate", 
+    numerator=dataset.fit_6_all_lowerGI,
+    denominator=dataset.elig_cohort,
+    group_by={"imd": imd5}
+    )
+
+measures.define_measure(
+    name="ca_6_rate", 
+    numerator=dataset.ca_6_all_lowerGI,
+    denominator=dataset.lowerGI_any_symp,
     group_by={"imd": imd5}
     )
