@@ -26,7 +26,7 @@ index_date = INTERVAL.start_date
 
 dataset = make_dataset_lowerGI(index_date=index_date, end_date=INTERVAL.end_date)
 
-dataset.elig_cohort = dataset.entry_date.is_on_or_before(INTERVAL.end_date) & dataset.exit_date.is_after(index_date)
+dataset.elig_cohort = dataset.entry_date.is_on_or_before(INTERVAL.end_date) & dataset.exit_date.is_after(index_date) & patients.date_of_birth.is_not_null()
 
 period_entry = maximum_of(index_date, dataset.entry_date)
 period_exit = minimum_of(INTERVAL.end_date, dataset.exit_date)

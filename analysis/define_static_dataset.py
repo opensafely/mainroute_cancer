@@ -13,7 +13,7 @@ end_date = "2023-10-22"
 
 dataset = make_dataset_lowerGI(index_date="2018-03-23", end_date="2023-10-22")
 
-elig_cohort = dataset.entry_date.is_on_or_before(end_date) & dataset.exit_date.is_after(index_date)
+elig_cohort = dataset.entry_date.is_on_or_before(end_date) & dataset.exit_date.is_after(index_date) & patients.date_of_birth.is_not_null()
 
 dataset.define_population(
     elig_cohort
