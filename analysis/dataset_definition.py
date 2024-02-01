@@ -29,7 +29,7 @@ def make_dataset_lowerGI(index_date, end_date):
                                                             clinical_events.date
                                                         ).first_for_patient().date
     
-    dataset.exit_date = minimum_of(death_date, age_110_date, dereg_date, colorectal_ca_diag_date)
+    dataset.exit_date = minimum_of(death_date, age_110_date, dereg_date, colorectal_ca_diag_date, "2023-10-22")
 
     dataset.death_date = death_date
 
