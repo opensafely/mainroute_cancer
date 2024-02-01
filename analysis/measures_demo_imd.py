@@ -78,21 +78,6 @@ dataset.fit_6 = case(
 
 ## Define demographic variables
 
-age = patients.age_on(dataset.entry_date)
-age_group = case(
-        when(age < 30).then("16-29"),
-        when(age < 40).then("30-39"),
-        when(age < 50).then("40-49"),
-        when(age < 60).then("50-59"),
-        when(age < 70).then("60-69"),
-        when(age < 80).then("70-79"),
-        when(age < 90).then("80-89"),
-        when(age >= 90).then("90+"),
-        otherwise="missing",
-)
-
-sex = patients.sex
-
 imd = addresses.for_patient_on(dataset.entry_date).imd_rounded
 imd5 = case(
         when((imd >=0) & (imd < int(32844 * 1 / 5))).then("1 (most deprived)"),
