@@ -46,7 +46,7 @@ def make_dataset_lowerGI(index_date, end_date):
     def prev_event(codelist, symp_date):
         return clinical_events.where(clinical_events.snomedct_code.is_in(codelist)
             ).where(
-                clinical_events.date.is_on_or_between(symp_date - days (42), symp_date)
+                clinical_events.date.is_on_or_between(symp_date - days (42), symp_date - days(1))
             ).exists_for_patient()
 
     dataset.ida_date = first_event(codelists.ida_codes).date
