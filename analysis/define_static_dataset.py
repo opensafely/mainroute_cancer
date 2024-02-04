@@ -24,7 +24,13 @@ dataset.period_exit = minimum_of(end_date, dataset.exit_date)
 
 dataset.follow_up_years = (dataset.period_exit - dataset.period_entry).years
 
+dataset.colorectal_ca_diag = clinical_events.where(clinical_events.snomedct_code.is_in(codelists.colorectal_diagnosis_codes_snomed)
+        ).where(
+            clinical_events.date.is_on_or_between(index_date, end_date)
+        ).exists_for_patient()
+
 age = patients.age_on(dataset.entry_date)
+dataset.age = age
 dataset.age_group = case(
         when(age < 30).then("16-29"),
         when(age < 40).then("30-39"),
@@ -40,45 +46,13 @@ dataset.age_group = case(
 dataset.sex = patients.sex
 
 imd = addresses.for_patient_on(dataset.entry_date).imd_rounded
-dataset.imd10 = case(
-        when((imd >= 0) & (imd < int(32844 * 1 / 10))).then("1 (most deprived)"),
-        when(imd < int(32844 * 2 / 10)).then("2"),
-        when(imd < int(32844 * 3 / 10)).then("3"),
-        when(imd < int(32844 * 4 / 10)).then("4"),
-        when(imd < int(32844 * 5 / 10)).then("5"),
-        when(imd < int(32844 * 6 / 10)).then("6"),
-        when(imd < int(32844 * 7 / 10)).then("7"),
-        when(imd < int(32844 * 8 / 10)).then("8"),
-        when(imd < int(32844 * 9 / 10)).then("9"),
-        when(imd >= int(32844 * 9 / 10)).then("10 (least deprived)"),
+imd5 = case(
+        when((imd >=0) & (imd < int(32844 * 1 / 5))).then("1"),
+        when(imd < int(32844 * 2 / 5)).then("2"),
+        when(imd < int(32844 * 3 / 5)).then("3"),
+        when(imd < int(32844 * 4 / 5)).then("4"),
+        when(imd < int(32844 * 5 / 5)).then("5"),
         otherwise="unknown"
-)
-
-ethnicity16 = clinical_events.where(clinical_events.snomedct_code.is_in(codelists.ethnicity_codes_16)
-    ).where(
-        clinical_events.date.is_on_or_before(dataset.entry_date)
-    ).sort_by(
-        clinical_events.date
-    ).last_for_patient().snomedct_code.to_category(codelists.ethnicity_codes_16)
-
-dataset.ethnicity16 = case(
-    when(ethnicity16 == "1").then("White - British"),
-    when(ethnicity16 == "2").then("White - Irish"),
-    when(ethnicity16 == "3").then("White - Other"),
-    when(ethnicity16 == "4").then("Mixed - White/Black Caribbean"),
-    when(ethnicity16 == "5").then("Mixed - White/Black African"),
-    when(ethnicity16 == "6").then("Mixed - White/Asian"),
-    when(ethnicity16 == "7").then("Mixed - Other"),
-    when(ethnicity16 == "8").then("Asian or Asian British - Indian"),
-    when(ethnicity16 == "9").then("Asian or Asian British - Pakistani"),
-    when(ethnicity16 == "10").then("Asian or Asian British - Bangladeshi"),
-    when(ethnicity16 == "11").then("Asian or Asian British - Other"),
-    when(ethnicity16 == "12").then("Black - Caribbean"),    
-    when(ethnicity16 == "13").then("Black - African"),
-    when(ethnicity16 == "14").then("Black - Other"),
-    when(ethnicity16 == "15").then("Other - Chinese"),
-    when(ethnicity16 == "16").then("Other - Other"),
-    otherwise="Unknown"
 )
 
 ethnicity6 = clinical_events.where(
