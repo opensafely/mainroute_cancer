@@ -33,3 +33,17 @@ actions:
     outputs:
       moderately_sensitive:
         measure_csv: output/measures/measures_demo_imd.csv
+  
+  measures_symptoms:
+    run: python:latest python analysis/descriptive/measures_symptoms_processing.py
+    needs: [measures_demo_imd]
+    outputs:
+      moderately_sensitive:
+        table: output/measures/measures_demo_imd_symptoms.csv
+  
+  measures_cancer_conversion:
+    run: python:latest python analysis/descriptive/measures_cancer_processing.py
+    needs: [measures_demo_imd]
+    outputs:
+      moderately_sensitive:
+        table: output/measures/measures_demo_imd_cancerconversion.csv
