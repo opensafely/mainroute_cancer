@@ -46,7 +46,7 @@ dataset.age_group = case(
 dataset.sex = patients.sex
 
 imd = addresses.for_patient_on(dataset.entry_date).imd_rounded
-imd5 = case(
+dataset.imd5 = case(
         when((imd >=0) & (imd < int(32844 * 1 / 5))).then("1"),
         when(imd < int(32844 * 2 / 5)).then("2"),
         when(imd < int(32844 * 3 / 5)).then("3"),
