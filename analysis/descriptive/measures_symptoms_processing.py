@@ -20,6 +20,5 @@ df['events_round'] = df['numerator']  + np.where(s>=3,5-s,-s)
 df = df.drop('numerator', axis=1)
 df = df.drop('denominator', axis=1)
 df = df.drop('ratio', axis=1)
-df = df.drop('followup_round', axis=1)
 
 df.to_csv("output/measures/measures_demo_imd_symptoms.csv")
