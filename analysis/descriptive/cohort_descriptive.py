@@ -30,4 +30,9 @@ agg_data_whole_cohort = pd.concat([num_age_group, num_sex, num_imd5, num_ethnici
 #agg_data_lowerGI = pd.concat([num_age_group_lowerGI, num_sex_lowerGI, num_imd5_lowerGI, num_ethnicity6_lowerGI])
 #agg_data = pd.concat([agg_data_whole_cohort, agg_data_lowerGI], axis=1)
 
+agg_data_whole_cohort.columns = agg_data_whole_cohort.columns.str.strip()
+
+s = (agg_data_whole_cohort['whole cohort'] % 5)
+agg_data_whole_cohort['whole cohort_round'] = agg_data_whole_cohort['whole cohort']  + np.where(s>=3,5-s,-s)
+
 agg_data_whole_cohort.to_csv("output/data/aggregate_data.csv")
