@@ -48,9 +48,9 @@ actions:
       moderately_sensitive:
         table: output/measures/measures_demo_imd_cancerconversion.csv
 
-  cohort_demographic:
+  cohort_descriptive_whole:
     run: python:latest python analysis/descriptive/cohort_descriptive.py
     needs: [generate_dataset_table]
     outputs:
       moderately_sensitive:
-        table: output/data/demographic_data.csv
+        table: output/data/descriptive_whole_data.csv

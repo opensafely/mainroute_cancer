@@ -37,4 +37,6 @@ agg_data_whole_cohort.columns = agg_data_whole_cohort.columns.str.strip()
 s = (agg_data_whole_cohort['whole cohort'] % 5)
 agg_data_whole_cohort['whole cohort_round'] = agg_data_whole_cohort['whole cohort']  + np.where(s>=3,5-s,-s)
 
-agg_data_whole_cohort.to_csv("output/data/demographic_data.csv")
+agg_data_whole_cohort = agg_data_whole_cohort.drop('whole cohort', axis=1)
+
+agg_data_whole_cohort.to_csv("output/data/descriptive_whole_data.csv")
