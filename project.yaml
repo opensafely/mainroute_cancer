@@ -54,3 +54,17 @@ actions:
     outputs:
       moderately_sensitive:
         table: output/data/descriptive_whole_data.csv
+  
+  generate_referral_test:
+    run: ehrql:v1 generate-dataset analysis/referral_test.py 
+      --output output/data/referral_test.csv
+    outputs:
+      highly_sensitive:
+        cohort: output/data/referral_test.csv
+  
+  descriptive_referral_test:
+    run: python:latest python analysis/descriptive/sum_referral_test.py
+    needs: [generate_referral_test]
+    outputs:
+      moderately_sensitive:
+        table: output/data/summary_referral_test.csv
