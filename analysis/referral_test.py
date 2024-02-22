@@ -107,3 +107,12 @@ opa_1month = (
 )
 
 dataset.opa_1m_tfc = opa_1month.treatment_function_code
+
+proc_1month = (
+    opa_proc.where(opa_proc.appointment_date.is_on_or_between(dataset.lowerGI_2ww_date, dataset.lowerGI_2ww_date + months(1))
+        ).sort_by(
+            opa_proc.appointment_date
+        ).first_for_patient()
+)
+
+dataset.proc_1m_opcs = proc_1month.primary_procedure_code
