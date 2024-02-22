@@ -24,27 +24,86 @@ dataset.define_population(
 
 dataset.lowerGI_2ww_date = lowerGI_2ww_ref.date
 
+first_attendance_code = ["1", "3"]
 colorectal_surg_clinic_code = ["104"]
 gastro_clinic_code = ["301"]
+colonoscopy_code = ["H22", "H18", "H25", "H28"]
 
-colorectal_surg_clinic_2ww = (
+colorectal_surg_clinic_21days = (
     opa.where(opa.treatment_function_code.is_in(colorectal_surg_clinic_code)
         ).where(
             opa.appointment_date.is_on_or_between(dataset.lowerGI_2ww_date, dataset.lowerGI_2ww_date + days(21))          
+        ).where(
+            opa.first_attendance.is_in(first_attendance_code)
+        ).sort_by(
+            opa.appointment_date
+        ).first_for_patient()
+)
+colorectal_surg_clinic_1month = (
+    opa.where(opa.treatment_function_code.is_in(colorectal_surg_clinic_code)
+        ).where(
+            opa.appointment_date.is_on_or_between(dataset.lowerGI_2ww_date, dataset.lowerGI_2ww_date + months(1))          
+        ).where(
+            opa.first_attendance.is_in(first_attendance_code)
         ).sort_by(
             opa.appointment_date
         ).first_for_patient()
 )
 
-dataset.colorectal_surg_clinic_3weeks = colorectal_surg_clinic_2ww.exists_for_patient()
+dataset.colorectal_surg_clinic_21d = colorectal_surg_clinic_21days.exists_for_patient()
+dataset.colorectal_surg_clinic_1m = colorectal_surg_clinic_1month.exists_for_patient()
 
-gastro_clinic_2ww = (
+gastro_clinic_21days = (
     opa.where(opa.treatment_function_code.is_in(gastro_clinic_code)
         ).where(
             opa.appointment_date.is_on_or_between(dataset.lowerGI_2ww_date, dataset.lowerGI_2ww_date + days(21))          
+        ).where(
+            opa.first_attendance.is_in(first_attendance_code)
+        ).sort_by(
+            opa.appointment_date
+        ).first_for_patient()
+)
+gastro_clinic_1month = (
+    opa.where(opa.treatment_function_code.is_in(gastro_clinic_code)
+        ).where(
+            opa.appointment_date.is_on_or_between(dataset.lowerGI_2ww_date, dataset.lowerGI_2ww_date + months(1))          
+        ).where(
+            opa.first_attendance.is_in(first_attendance_code)
         ).sort_by(
             opa.appointment_date
         ).first_for_patient()
 )
 
-dataset.gastro_clinic_3weeks = gastro_clinic_2ww.exists_for_patient()
+dataset.gastro_clinic_21d = gastro_clinic_21days.exists_for_patient()
+dataset.gastro_clinic_1m = gastro_clinic_1month.exists_for_patient()
+
+colonoscopy_21days = (
+    opa_proc.where(opa_proc.primary_procedure_code.is_in(colonoscopy_code)
+        ).where(
+            opa_proc.appointment_date.is_on_or_between(dataset.lowerGI_2ww_date, dataset.lowerGI_2ww_date + days(21))
+        ).sort_by(
+            opa_proc.appointment_date
+        ).first_for_patient()
+)
+colonoscopy_1month = (
+    opa_proc.where(opa_proc.primary_procedure_code.is_in(colonoscopy_code)
+        ).where(
+            opa_proc.appointment_date.is_on_or_between(dataset.lowerGI_2ww_date, dataset.lowerGI_2ww_date + months(1))
+        ).sort_by(
+            opa_proc.appointment_date
+        ).first_for_patient()
+)
+
+dataset.colonoscopy_21d = colonoscopy_21days.exists_for_patient()
+dataset.colonoscopy_1m = colonoscopy_1month.exists_for_patient()
+
+opa_1month = (
+    opa.where(opa.appointment_date.is_on_or_between(dataset.lowerGI_2ww_date, dataset.lowerGI_2ww_date + months(1))
+        ).where(
+            opa.first_attendance.is_in(first_attendance_code)
+        ).sort_by(
+            opa.appointment_date
+        ).first_for_patient()
+)
+
+dataset.opa_1m_tfc = opa_1month.treatment_function_code
