@@ -29,7 +29,13 @@ num_opa_1m_tfc.columns = ["referral cohort"]
 num_proc_1m_opcs = df["proc_1m_opcs"].value_counts().to_frame()
 num_proc_1m_opcs.columns = ["referral cohort"]
 
-agg_data_whole_cohort = pd.concat([num_colorectal_surg_21d, num_colorectal_surg_1m, num_gastro_clinic_21d, num_gastro_clinic_1m, num_colonoscopy_21d, num_colonoscopy_1m, num_opa_1m_tfc, num_proc_1m_opcs])
+num_apcs_6w_icd10 = df["apcs_6w_icd10"].value_counts().to_frame()
+num_apcs_6w_icd10.columns = ["referral cohort"]
+
+num_apcs_6w_hrg = df["apcs_6w_hrg"].value_counts().to_frame()
+num_apcs_6w_hrg.columns = ["referral cohort"]
+
+agg_data_whole_cohort = pd.concat([num_colorectal_surg_21d, num_colorectal_surg_1m, num_gastro_clinic_21d, num_gastro_clinic_1m, num_colonoscopy_21d, num_colonoscopy_1m, num_opa_1m_tfc, num_proc_1m_opcs, num_apcs_6w_icd10, num_apcs_6w_hrg])
 
 agg_data_whole_cohort.columns = agg_data_whole_cohort.columns.str.strip()
 

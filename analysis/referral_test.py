@@ -1,6 +1,6 @@
 from ehrql import Dataset, years, days, months, minimum_of, maximum_of, case, when
 from ehrql.tables.core import patients, clinical_events
-from ehrql.tables.tpp import practice_registrations, ons_deaths, opa, opa_proc
+from ehrql.tables.tpp import practice_registrations, ons_deaths, opa, opa_proc, apcs
 
 import codelists
 
@@ -116,3 +116,13 @@ proc_1month = (
 )
 
 dataset.proc_1m_opcs = proc_1month.primary_procedure_code
+
+apcs_6weeks = (
+    apcs.where(apcs.admission_date.is_on_or_between(dataset.lowerGI_2ww_date, dataset.lowerGI_2ww_date + days(42))
+        ).sort_by(
+            apcs.admission_date
+        ).first_for_patient()
+)
+
+dataset.apcs_6w_icd10 = apcs_6weeks.primary_diagnosis
+dataset.apcs_6w_hrg = apcs_6weeks.spell_core_hrg_sus
