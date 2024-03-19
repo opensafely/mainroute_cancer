@@ -1,0 +1,29 @@
+code,term
+FE01Z,"Complex Therapeutic Endoscopic, Upper or Lower Gastrointestinal Tract Procedures"
+FE02A,"Major Therapeutic Endoscopic, Upper or Lower Gastrointestinal Tract Procedures, 19 years and over, with CC Score 3+"
+FE02B,"Major Therapeutic Endoscopic, Upper or Lower Gastrointestinal Tract Procedures, 19 years and over, with CC Score 1-2"
+FE02C,"Major Therapeutic Endoscopic, Upper or Lower Gastrointestinal Tract Procedures, 19 years and over, with CC Score 0"
+FE02F,"Major Therapeutic Endoscopic, Upper or Lower Gastrointestinal Tract Procedures, 18 years and under"
+FE03A,"Intermediate Therapeutic Endoscopic, Upper or Lower Gastrointestinal Tract Procedures, 19 years and over"
+FE03B,"Intermediate Therapeutic Endoscopic, Upper or Lower Gastrointestinal Tract Procedures, 18 years and under"
+FE10A,Endoscopic Insertion of Luminal Stent into Gastrointestinal Tract with CC Score 7+
+FE10B,Endoscopic Insertion of Luminal Stent into Gastrointestinal Tract with CC Score 4-6
+FE10C,Endoscopic Insertion of Luminal Stent into Gastrointestinal Tract with CC Score 1-3
+FE10D,Endoscopic Insertion of Luminal Stent into Gastrointestinal Tract with CC Score 0
+FE30Z,"Therapeutic Colonoscopy, 19 years and over"
+FE31Z,"Diagnostic Colonoscopy with Biopsy, 19 years and over"
+FE32Z,"Diagnostic Colonoscopy, 19 years and over"
+FE33Z,"Therapeutic Flexible Sigmoidoscopy, 19 years and over"
+FE34Z,"Diagnostic Flexible Sigmoidoscopy with Biopsy, 19 years and over"
+FE35Z,"Diagnostic Flexible Sigmoidoscopy, 19 years and over"
+FE36Z,"Diagnostic or Therapeutic, Rigid Sigmoidoscopy, 19 years and over"
+FE37C,"Endoscopic or Intermediate, Lower Gastrointestinal Tract Procedures, between 5 and 18 years"
+FE37D,"Endoscopic or Intermediate, Lower Gastrointestinal Tract Procedures, 4 years and under"
+FE40Z,"Therapeutic, Upper Gastrointestinal Tract Endoscopic Procedure with Colonoscopy, 19 years and over"
+FE41Z,"Diagnostic, Upper Gastrointestinal Tract Endoscopic Procedure with Colonoscopy, with Biopsy, 19 years and over"
+FE42Z,"Diagnostic, Upper Gastrointestinal Tract Endoscopic Procedure with Colonoscopy, 19 years and over"
+FE43Z,"Therapeutic, Upper Gastrointestinal Tract Endoscopic Procedure with Sigmoidoscopy, 19 years and over"
+FE44Z,"Diagnostic, Upper Gastrointestinal Tract Endoscopic Procedure with Sigmoidoscopy, with Biopsy, 19 years and over"
+FE45Z,"Diagnostic, Upper Gastrointestinal Tract Endoscopic Procedure with Sigmoidoscopy, 19 years and over"
+FE46Z,"Upper Gastrointestinal Tract Endoscopic Procedure, with Colonoscopy or Sigmoidoscopy, 18 years and under"
+RD61Z,Colon Computerised Tomography Scan
