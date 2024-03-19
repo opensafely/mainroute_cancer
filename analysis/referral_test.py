@@ -27,8 +27,9 @@ dataset.lowerGI_2ww_date = lowerGI_2ww_ref.date
 first_attendance_code = ["1", "3"]
 colorectal_surg_clinic_code = ["104"]
 gastro_clinic_code = ["301"]
-colonoscopy_code = ["H22", "H18", "H25", "H28"]
+#colonoscopy_code = ["H22", "H18", "H25", "H28"]
 
+"""
 colorectal_surg_clinic_21days = (
     opa.where(opa.treatment_function_code.is_in(colorectal_surg_clinic_code)
         ).where(
@@ -39,10 +40,12 @@ colorectal_surg_clinic_21days = (
             opa.appointment_date
         ).first_for_patient()
 )
-colorectal_surg_clinic_1month = (
+"""
+
+colorectal_surg_clinic_6weeks = (
     opa.where(opa.treatment_function_code.is_in(colorectal_surg_clinic_code)
         ).where(
-            opa.appointment_date.is_on_or_between(dataset.lowerGI_2ww_date, dataset.lowerGI_2ww_date + months(1))          
+            opa.appointment_date.is_on_or_between(dataset.lowerGI_2ww_date, dataset.lowerGI_2ww_date + days(42))          
         ).where(
             opa.first_attendance.is_in(first_attendance_code)
         ).sort_by(
@@ -50,9 +53,10 @@ colorectal_surg_clinic_1month = (
         ).first_for_patient()
 )
 
-dataset.colorectal_surg_clinic_21d = colorectal_surg_clinic_21days.exists_for_patient()
-dataset.colorectal_surg_clinic_1m = colorectal_surg_clinic_1month.exists_for_patient()
+#dataset.colorectal_surg_clinic_21d = colorectal_surg_clinic_21days.exists_for_patient()
+dataset.colorectal_surg_clinic_6w = colorectal_surg_clinic_6weeks.exists_for_patient()
 
+"""
 gastro_clinic_21days = (
     opa.where(opa.treatment_function_code.is_in(gastro_clinic_code)
         ).where(
@@ -63,10 +67,12 @@ gastro_clinic_21days = (
             opa.appointment_date
         ).first_for_patient()
 )
-gastro_clinic_1month = (
+"""
+
+gastro_clinic_6weeks = (
     opa.where(opa.treatment_function_code.is_in(gastro_clinic_code)
         ).where(
-            opa.appointment_date.is_on_or_between(dataset.lowerGI_2ww_date, dataset.lowerGI_2ww_date + months(1))          
+            opa.appointment_date.is_on_or_between(dataset.lowerGI_2ww_date, dataset.lowerGI_2ww_date + days(42))          
         ).where(
             opa.first_attendance.is_in(first_attendance_code)
         ).sort_by(
@@ -74,9 +80,10 @@ gastro_clinic_1month = (
         ).first_for_patient()
 )
 
-dataset.gastro_clinic_21d = gastro_clinic_21days.exists_for_patient()
-dataset.gastro_clinic_1m = gastro_clinic_1month.exists_for_patient()
+#dataset.gastro_clinic_21d = gastro_clinic_21days.exists_for_patient()
+dataset.gastro_clinic_6w = gastro_clinic_6weeks.exists_for_patient()
 
+"""
 colonoscopy_21days = (
     opa_proc.where(opa_proc.primary_procedure_code.is_in(colonoscopy_code)
         ).where(
@@ -85,6 +92,7 @@ colonoscopy_21days = (
             opa_proc.appointment_date
         ).first_for_patient()
 )
+
 colonoscopy_1month = (
     opa_proc.where(opa_proc.primary_procedure_code.is_in(colonoscopy_code)
         ).where(
@@ -96,6 +104,18 @@ colonoscopy_1month = (
 
 dataset.colonoscopy_21d = colonoscopy_21days.exists_for_patient()
 dataset.colonoscopy_1m = colonoscopy_1month.exists_for_patient()
+"""
+
+lowergi_diagnostic_6weeks = (
+    apcs.where(apcs.spell_core_hrg_sus.is_in(codelists.lowerGI_diagnostic_codes)
+        ).where(
+            apcs.admission_date.is_on_or_between(dataset.lowerGI_2ww_date, dataset.lowerGI_2ww_date + days(42))
+        ).sort_by(
+            apcs.admission_date
+        ).first_for_patient()
+)
+
+dataset.lowergi_diagnostic_6w = lowergi_diagnostic_6weeks.exists_for_patient()
 
 opa_1month = (
     opa.where(opa.appointment_date.is_on_or_between(dataset.lowerGI_2ww_date, dataset.lowerGI_2ww_date + months(1))
@@ -108,6 +128,7 @@ opa_1month = (
 
 dataset.opa_1m_tfc = opa_1month.treatment_function_code
 
+"""
 proc_1month = (
     opa_proc.where(opa_proc.appointment_date.is_on_or_between(dataset.lowerGI_2ww_date, dataset.lowerGI_2ww_date + months(1))
         ).sort_by(
@@ -116,6 +137,7 @@ proc_1month = (
 )
 
 dataset.proc_1m_opcs = proc_1month.primary_procedure_code
+"""
 
 apcs_6weeks = (
     apcs.where(apcs.admission_date.is_on_or_between(dataset.lowerGI_2ww_date, dataset.lowerGI_2ww_date + days(42))
