@@ -159,6 +159,13 @@ measures.define_measure(
     )
 
 measures.define_measure(
+    name="diag_6_rate", 
+    numerator=dataset.diag_6_all_lowerGI,
+    denominator=dataset.lowerGI_any_symp,
+    group_by={"imd": imd5}
+    )
+
+measures.define_measure(
     name="ca_6_rate", 
     numerator=dataset.ca_6_all_lowerGI,
     denominator=dataset.lowerGI_any_symp,
