@@ -4,7 +4,7 @@ from ehrql.tables.tpp import practice_registrations, ons_deaths, opa, opa_proc, 
 
 import codelists
 
-index_date = "2018-03-23"
+index_date = "2020-01-21"
 end_date = "2023-10-22"
 
 dataset = Dataset()
@@ -18,8 +18,14 @@ lowerGI_2ww_ref = clinical_events.where(clinical_events.snomedct_code.is_in(code
 
 has_lowerGI_2ww = lowerGI_2ww_ref.exists_for_patient()
 
+region = practice_registrations.for_patient_on(index_date).practice_nuts1_region_name 
+region_east = case(
+        when(region == "East").then(True),
+        otherwise=False
+)
+
 dataset.define_population(
-    has_lowerGI_2ww
+    has_lowerGI_2ww & region_east
 )
 
 dataset.lowerGI_2ww_date = lowerGI_2ww_ref.date
