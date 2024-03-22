@@ -27,7 +27,7 @@ dataset.lowerGI_2ww_date = lowerGI_2ww_ref.date
 first_attendance_code = ["1", "3"]
 colorectal_surg_clinic_code = ["104"]
 gastro_clinic_code = ["301"]
-opcs_colonoscopy_code = ["H22", "H18", "H25", "H28"]
+#opcs_colonoscopy_code = ["H22", "H18", "H25", "H28"]
 
 """
 colorectal_surg_clinic_21days = (
@@ -92,7 +92,7 @@ colonoscopy_21days = (
             opa_proc.appointment_date
         ).first_for_patient()
 )
-"""
+
 opa_colonoscopy_6weeks = (
     opa_proc.where(opa_proc.primary_procedure_code.is_in(opcs_colonoscopy_code)
         ).where(
@@ -102,9 +102,9 @@ opa_colonoscopy_6weeks = (
         ).first_for_patient()
 )
 
-#dataset.colonoscopy_21d = colonoscopy_21days.exists_for_patient()
+dataset.colonoscopy_21d = colonoscopy_21days.exists_for_patient()
 dataset.opa_colonoscopy_6w = opa_colonoscopy_6weeks.exists_for_patient()
-
+"""
 apcs_diagnostic_6weeks = (
     apcs.where(apcs.spell_core_hrg_sus.is_in(codelists.lowerGI_diagnostic_codes)
         ).where(
@@ -127,7 +127,7 @@ opa_diagnostic_6weeks = (
 
 dataset.opa_diagnostic_6w = opa_diagnostic_6weeks.exists_for_patient()
 
-dataset.lowergi_diagnostic_6w = (dataset.opa_colonoscopy_6w | dataset.apcs_diagnostic_6w | dataset.opa_diagnostic_6w)
+dataset.lowergi_diagnostic_6w = (dataset.apcs_diagnostic_6w | dataset.opa_diagnostic_6w)
 
 opa_1month = (
     opa.where(opa.appointment_date.is_on_or_between(dataset.lowerGI_2ww_date, dataset.lowerGI_2ww_date + months(1))

@@ -23,6 +23,9 @@ num_gastro_clinic_6w.columns = ["referral cohort"]
 #num_colonoscopy_6w = df["colonoscopy_6w"].value_counts().to_frame()
 #num_colonoscopy_6w.columns = ["referral cohort"]
 
+num_apcs_diagnostic_6w = df["apcs_diagnostic_6w"].value_counts().to_frame()
+num_apcs_diagnostic_6w.columns = ["referral cohort"]
+
 num_lowergi_diagnostic_6w = df["lowergi_diagnostic_6w"].value_counts().to_frame()
 num_lowergi_diagnostic_6w.columns = ["referral cohort"]
 
@@ -38,7 +41,7 @@ num_lowergi_diagnostic_6w.columns = ["referral cohort"]
 #num_apcs_6w_hrg = df["apcs_6w_hrg"].value_counts().to_frame()
 #num_apcs_6w_hrg.columns = ["referral cohort"]
 
-agg_data_whole_cohort = pd.concat([num_colorectal_surg_6w, num_gastro_clinic_6w, num_lowergi_diagnostic_6w])
+agg_data_whole_cohort = pd.concat([num_colorectal_surg_6w, num_gastro_clinic_6w, num_apcs_diagnostic_6w, num_lowergi_diagnostic_6w])
 
 agg_data_whole_cohort.columns = agg_data_whole_cohort.columns.str.strip()
 
