@@ -1,6 +1,6 @@
 from ehrql import Dataset, years, days, months, minimum_of, maximum_of, case, when
-from ehrql.tables.core import patients, clinical_events
-from ehrql.tables.tpp import practice_registrations, ons_deaths, apcs
+from ehrql.tables.core import patients
+from ehrql.tables.tpp import practice_registrations, ons_deaths, clinical_events, clinical_events_ranges, apcs
 
 import codelists
 
@@ -49,32 +49,67 @@ def make_dataset_lowerGI(index_date, end_date):
                 clinical_events.date.is_on_or_between(symp_date - days (42), symp_date - days(1))
             ).exists_for_patient()
 
-    dataset.ida_date = first_event(codelists.ida_codes).date
-    dataset.cibh_date = first_event(codelists.cibh_codes).date
-    dataset.prbleed_date = first_event(codelists.prbleeding_codes).date
-    dataset.wl_date = first_event(codelists.wl_codes).date
-    dataset.abdomass_date = first_event(codelists.abdomass_codes).date
-    dataset.abdopain_date = first_event(codelists.abdopain_codes).date
-    dataset.anaemia_date = first_event(codelists.anaemia_codes).date
+    ida_date = first_event(codelists.ida_codes).date
+    cibh_date = first_event(codelists.cibh_codes).date
+    prbleed_date = first_event(codelists.prbleeding_codes).date
+    wl_date = first_event(codelists.wl_codes).date
+    abdomass_date = first_event(codelists.abdomass_codes).date
+    abdopain_date = first_event(codelists.abdopain_codes).date
+    anaemia_date = first_event(codelists.anaemia_codes).date
 
-    dataset.fit_test_any_date = first_event(codelists.fit_codes).date
+    fit_test_any_date = first_event(codelists.fit_codes).date
 
     def has_event(codelist):
         return first_event(codelist).exists_for_patient()
 
-    dataset.ida_symp = has_event(codelists.ida_codes) & ~prev_event(codelists.ida_codes, dataset.ida_date)
-    dataset.cibh_symp = has_event(codelists.cibh_codes) & ~prev_event(codelists.cibh_codes, dataset.cibh_date)
-    dataset.abdomass_symp = has_event(codelists.abdomass_codes) & ~prev_event(codelists.abdomass_codes, dataset.abdomass_date)
-    dataset.prbleed_symp_50 = has_event(codelists.prbleeding_codes) & (patients.age_on(dataset.prbleed_date) >= 50) & ~prev_event(codelists.prbleeding_codes, dataset.prbleed_date)
-    dataset.wl_symp_50 = has_event(codelists.wl_codes) & (patients.age_on(dataset.wl_date) >= 50) & ~prev_event(codelists.wl_codes, dataset.wl_date)
-    dataset.abdopain_symp_50 = has_event(codelists.abdopain_codes) & (patients.age_on(dataset.abdopain_date) >= 50) & ~prev_event(codelists.abdopain_codes, dataset.abdopain_date)
-    dataset.anaemia_symp_60 = has_event(codelists.anaemia_codes) & (patients.age_on(dataset.anaemia_date) >= 60) & ~prev_event(codelists.anaemia_codes, dataset.anaemia_date)
-    dataset.wl_abdopain_symp_40 = has_event(codelists.wl_codes) & has_event(codelists.abdopain_codes) & ((patients.age_on(dataset.wl_date) >= 40) | (patients.age_on(dataset.abdopain_date) >= 40)) & ~prev_event(codelists.wl_codes, dataset.wl_date) & ~prev_event(codelists.abdopain_codes, dataset.abdopain_date)
-    dataset.prbleed_abdopain_symp = has_event(codelists.prbleeding_codes) & has_event(codelists.abdopain_codes) & (patients.age_on(dataset.prbleed_date) < 50) & ~prev_event(codelists.prbleeding_codes, dataset.prbleed_date) & ~prev_event(codelists.abdopain_codes, dataset.abdopain_date)
-    dataset.prbleed_wl_symp = has_event(codelists.prbleeding_codes) & has_event(codelists.wl_codes) & (patients.age_on(dataset.prbleed_date) < 50) & ~prev_event(codelists.prbleeding_codes, dataset.prbleed_date) & ~prev_event(codelists.wl_codes, dataset.wl_date)
-    dataset.lowerGI_any_symp = (dataset.ida_symp | dataset.cibh_symp | dataset.abdomass_symp | dataset.prbleed_symp_50 | dataset.wl_symp_50 | dataset.abdopain_symp_50 | dataset.anaemia_symp_60 | dataset.wl_abdopain_symp_40 | dataset.prbleed_abdopain_symp | dataset.prbleed_wl_symp)
+    dataset.ida_symp = has_event(codelists.ida_codes) & ~prev_event(codelists.ida_codes, ida_date)
+    dataset.cibh_symp = has_event(codelists.cibh_codes) & ~prev_event(codelists.cibh_codes, cibh_date)
+    dataset.abdomass_symp = has_event(codelists.abdomass_codes) & ~prev_event(codelists.abdomass_codes, abdomass_date)
+    dataset.prbleed_symp = has_event(codelists.prbleeding_codes) & ~prev_event(codelists.prbleeding_codes, prbleed_date)
+    dataset.wl_symp = has_event(codelists.wl_codes) & ~prev_event(codelists.wl_codes, wl_date)
+    dataset.abdopain_symp = has_event(codelists.abdopain_codes) & ~prev_event(codelists.abdopain_codes, abdopain_date)
+    dataset.anaemia_symp = has_event(codelists.anaemia_codes) & ~prev_event(codelists.anaemia_codes, anaemia_date)
 
-    dataset.fit_test_any = has_event(codelists.fit_codes) & ~prev_event(codelists.fit_codes, dataset.fit_test_any_date)
+    dataset.prbleed_symp_50 = has_event(codelists.prbleeding_codes) & (patients.age_on(prbleed_date) >= 50) & ~prev_event(codelists.prbleeding_codes, prbleed_date)
+    dataset.wl_symp_50 = has_event(codelists.wl_codes) & (patients.age_on(wl_date) >= 50) & ~prev_event(codelists.wl_codes, wl_date)
+    dataset.abdopain_symp_50 = has_event(codelists.abdopain_codes) & (patients.age_on(abdopain_date) >= 50) & ~prev_event(codelists.abdopain_codes, abdopain_date)
+    dataset.anaemia_symp_60 = has_event(codelists.anaemia_codes) & (patients.age_on(anaemia_date) >= 60) & ~prev_event(codelists.anaemia_codes, anaemia_date)
+    dataset.wl_abdopain_symp_40 = has_event(codelists.wl_codes) & has_event(codelists.abdopain_codes) & ((patients.age_on(wl_date) >= 40) | (patients.age_on(abdopain_date) >= 40)) & ~prev_event(codelists.wl_codes, wl_date) & ~prev_event(codelists.abdopain_codes, abdopain_date)
+    dataset.prbleed_abdopain_symp = has_event(codelists.prbleeding_codes) & has_event(codelists.abdopain_codes) & (patients.age_on(prbleed_date) < 50) & ~prev_event(codelists.prbleeding_codes, prbleed_date) & ~prev_event(codelists.abdopain_codes, abdopain_date)
+    dataset.prbleed_wl_symp = has_event(codelists.prbleeding_codes) & has_event(codelists.wl_codes) & (patients.age_on(prbleed_date) < 50) & ~prev_event(codelists.prbleeding_codes, prbleed_date) & ~prev_event(codelists.wl_codes, wl_date)
+    
+    dataset.lowerGI_any_symp = (dataset.ida_symp | dataset.cibh_symp | dataset.abdomass_symp | dataset.prbleed_symp | dataset.wl_symp | dataset.abdopain_symp | dataset.anaemia_symp)
+    dataset.lowerGI_2ww_symp = (dataset.ida_symp | dataset.cibh_symp | dataset.abdomass_symp | dataset.prbleed_symp_50 | dataset.wl_symp_50 | dataset.abdopain_symp_50 | dataset.anaemia_symp_60 | dataset.wl_abdopain_symp_40 | dataset.prbleed_abdopain_symp | dataset.prbleed_wl_symp)
+
+    dataset.fit_test_any = has_event(codelists.fit_codes) & ~prev_event(codelists.fit_codes, fit_test_any_date)
+
+    def symptom_date(symp_date, symp_event):
+        return case(when(symp_event).then(symp_date))
+    
+    dataset.ida_date = symptom_date(ida_date, dataset.ida_symp)
+    dataset.cibh_date = symptom_date(cibh_date, dataset.cibh_symp)
+    dataset.prbleed_date = symptom_date(prbleed_date, dataset.prbleed_symp)
+    dataset.wl_date = symptom_date(wl_date, dataset.wl_symp)
+    dataset.abdomass_date = symptom_date(abdomass_date, dataset.abdomass_symp)
+    dataset.abdopain_date = symptom_date(abdopain_date, dataset.abdopain_symp)
+    dataset.anaemia_date = symptom_date(anaemia_date, dataset.anaemia_symp)
+    dataset.fit_test_any_date = symptom_date(fit_test_any_date, dataset.fit_test_any)
+
+    fit_test_any_value = clinical_events_ranges.where(clinical_events_ranges.snomedct_code.is_in(codelists.fit_codes)
+        ).where(
+            clinical_events_ranges.date.is_on_or_after(dataset.fit_test_any_date)
+        ).sort_by(
+            clinical_events_ranges.date
+        ).first_for_patient().numeric_value
+    
+    fit_test_any_comparator = clinical_events_ranges.where(clinical_events_ranges.snomedct_code.is_in(codelists.fit_codes)
+        ).where(
+            clinical_events_ranges.date.is_on_or_after(dataset.fit_test_any_date)
+        ).sort_by(
+            clinical_events_ranges.date
+        ).first_for_patient().comparator
+    
+    dataset.fit_test_any_positive = case(when((fit_test_any_value>=10) & (fit_test_any_comparator!="<")).then(True), otherwise=False)
 
     def fit_6_weeks(symp_date):
         return clinical_events.where(clinical_events.snomedct_code.is_in(codelists.fit_codes)
@@ -84,37 +119,17 @@ def make_dataset_lowerGI(index_date, end_date):
             clinical_events.date
         ).first_for_patient()
         
-    dataset.fit_6_ida = dataset.ida_symp & fit_6_weeks(dataset.ida_date).exists_for_patient()
-    dataset.fit_6_cibh = dataset.cibh_symp & fit_6_weeks(dataset.cibh_date).exists_for_patient()
-    dataset.fit_6_abdomass = dataset.abdomass_symp & fit_6_weeks(dataset.abdomass_date).exists_for_patient()
-    dataset.fit_6_prbleed = dataset.prbleed_symp_50 & fit_6_weeks(dataset.prbleed_date).exists_for_patient()
-    dataset.fit_6_wl = dataset.wl_symp_50 & fit_6_weeks(dataset.wl_date).exists_for_patient()
-    dataset.fit_6_abdopain = dataset.abdopain_symp_50 & fit_6_weeks(dataset.abdopain_date).exists_for_patient()
-    dataset.fit_6_anaemia = dataset.anaemia_symp_60 & fit_6_weeks(dataset.anaemia_date).exists_for_patient()
-    dataset.fit_6_wl_abdopain = dataset.wl_abdopain_symp_40 & (fit_6_weeks(dataset.wl_date).exists_for_patient() | fit_6_weeks(dataset.abdopain_date).exists_for_patient())
-    dataset.fit_6_prbleed_abdopain = dataset.prbleed_abdopain_symp & fit_6_weeks(dataset.prbleed_date).exists_for_patient()
-    dataset.fit_6_prbleed_wl = dataset.prbleed_wl_symp & fit_6_weeks(dataset.prbleed_date).exists_for_patient()
+    dataset.fit_6_ida = dataset.ida_symp & fit_6_weeks(ida_date).exists_for_patient()
+    dataset.fit_6_cibh = dataset.cibh_symp & fit_6_weeks(cibh_date).exists_for_patient()
+    dataset.fit_6_abdomass = dataset.abdomass_symp & fit_6_weeks(abdomass_date).exists_for_patient()
+    dataset.fit_6_prbleed = dataset.prbleed_symp_50 & fit_6_weeks(prbleed_date).exists_for_patient()
+    dataset.fit_6_wl = dataset.wl_symp_50 & fit_6_weeks(wl_date).exists_for_patient()
+    dataset.fit_6_abdopain = dataset.abdopain_symp_50 & fit_6_weeks(abdopain_date).exists_for_patient()
+    dataset.fit_6_anaemia = dataset.anaemia_symp_60 & fit_6_weeks(anaemia_date).exists_for_patient()
+    dataset.fit_6_wl_abdopain = dataset.wl_abdopain_symp_40 & (fit_6_weeks(wl_date).exists_for_patient() | fit_6_weeks(abdopain_date).exists_for_patient())
+    dataset.fit_6_prbleed_abdopain = dataset.prbleed_abdopain_symp & fit_6_weeks(prbleed_date).exists_for_patient()
+    dataset.fit_6_prbleed_wl = dataset.prbleed_wl_symp & fit_6_weeks(prbleed_date).exists_for_patient()
     dataset.fit_6_all_lowerGI = (dataset.fit_6_ida | dataset.fit_6_cibh | dataset.fit_6_abdomass | dataset.fit_6_prbleed | dataset.fit_6_wl | dataset.fit_6_abdopain | dataset.fit_6_anaemia | dataset.fit_6_wl_abdopain | dataset.fit_6_prbleed_abdopain | dataset.fit_6_prbleed_wl)
-
-    def lowerGI_diagnostic_6_weeks(symp_date):
-        return apcs.where(apcs.spell_core_hrg_sus.is_in(codelists.lowerGI_diagnostic_codes)
-        ).where(
-            apcs.admission_date.is_on_or_between(symp_date, symp_date + days(42))
-        ).sort_by(
-            apcs.admission_date
-        ).first_for_patient()
-
-    dataset.diag_6_ida = dataset.ida_symp & lowerGI_diagnostic_6_weeks(dataset.ida_date).exists_for_patient()
-    dataset.diag_6_cibh = dataset.cibh_symp & lowerGI_diagnostic_6_weeks(dataset.cibh_date).exists_for_patient()
-    dataset.diag_6_abdomass = dataset.abdomass_symp & lowerGI_diagnostic_6_weeks(dataset.abdomass_date).exists_for_patient()
-    dataset.diag_6_prbleed = dataset.prbleed_symp_50 & lowerGI_diagnostic_6_weeks(dataset.prbleed_date).exists_for_patient()
-    dataset.diag_6_wl = dataset.wl_symp_50 & lowerGI_diagnostic_6_weeks(dataset.wl_date).exists_for_patient()
-    dataset.diag_6_abdopain = dataset.abdopain_symp_50 & lowerGI_diagnostic_6_weeks(dataset.abdopain_date).exists_for_patient()
-    dataset.diag_6_anaemia = dataset.anaemia_symp_60 & lowerGI_diagnostic_6_weeks(dataset.anaemia_date).exists_for_patient()
-    dataset.diag_6_wl_abdopain = dataset.wl_abdopain_symp_40 & (lowerGI_diagnostic_6_weeks(dataset.wl_date).exists_for_patient() | lowerGI_diagnostic_6_weeks(dataset.abdopain_date).exists_for_patient())
-    dataset.diag_6_prbleed_abdopain = dataset.prbleed_abdopain_symp & lowerGI_diagnostic_6_weeks(dataset.prbleed_date).exists_for_patient()
-    dataset.diag_6_prbleed_wl = dataset.prbleed_wl_symp & lowerGI_diagnostic_6_weeks(dataset.prbleed_date).exists_for_patient()
-    dataset.diag_6_all_lowerGI = (dataset.diag_6_ida | dataset.diag_6_cibh | dataset.diag_6_abdomass | dataset.diag_6_prbleed | dataset.diag_6_wl | dataset.diag_6_abdopain | dataset.diag_6_anaemia | dataset.diag_6_wl_abdopain | dataset.diag_6_prbleed_abdopain | dataset.diag_6_prbleed_wl)
 
     def colorectal_ca_symp_6_months(symp_date):
         return clinical_events.where(clinical_events.snomedct_code.is_in(codelists.colorectal_diagnosis_codes_snomed)
@@ -124,16 +139,16 @@ def make_dataset_lowerGI(index_date, end_date):
             clinical_events.date
         ).first_for_patient()
 
-    dataset.ca_6_ida = dataset.ida_symp & colorectal_ca_symp_6_months(dataset.ida_date).exists_for_patient()
-    dataset.ca_6_cibh = dataset.cibh_symp & colorectal_ca_symp_6_months(dataset.cibh_date).exists_for_patient()
-    dataset.ca_6_abdomass = dataset.abdomass_symp & colorectal_ca_symp_6_months(dataset.abdomass_date).exists_for_patient()
-    dataset.ca_6_prbleed = dataset.prbleed_symp_50 & colorectal_ca_symp_6_months(dataset.prbleed_date).exists_for_patient()
-    dataset.ca_6_wl = dataset.wl_symp_50 & colorectal_ca_symp_6_months(dataset.wl_date).exists_for_patient()
-    dataset.ca_6_abdopain = dataset.abdopain_symp_50 & colorectal_ca_symp_6_months(dataset.abdopain_date).exists_for_patient()
-    dataset.ca_6_anaemia = dataset.anaemia_symp_60 & colorectal_ca_symp_6_months(dataset.anaemia_date).exists_for_patient()
-    dataset.ca_6_wl_abdopain = dataset.wl_abdopain_symp_40 & (colorectal_ca_symp_6_months(dataset.wl_date).exists_for_patient() | colorectal_ca_symp_6_months(dataset.abdopain_date).exists_for_patient())
-    dataset.ca_6_prbleed_abdopain = dataset.prbleed_abdopain_symp & colorectal_ca_symp_6_months(dataset.prbleed_date).exists_for_patient()
-    dataset.ca_6_prbleed_wl = dataset.prbleed_wl_symp & colorectal_ca_symp_6_months(dataset.prbleed_date).exists_for_patient()
+    dataset.ca_6_ida = dataset.ida_symp & colorectal_ca_symp_6_months(ida_date).exists_for_patient()
+    dataset.ca_6_cibh = dataset.cibh_symp & colorectal_ca_symp_6_months(cibh_date).exists_for_patient()
+    dataset.ca_6_abdomass = dataset.abdomass_symp & colorectal_ca_symp_6_months(abdomass_date).exists_for_patient()
+    dataset.ca_6_prbleed = dataset.prbleed_symp_50 & colorectal_ca_symp_6_months(prbleed_date).exists_for_patient()
+    dataset.ca_6_wl = dataset.wl_symp_50 & colorectal_ca_symp_6_months(wl_date).exists_for_patient()
+    dataset.ca_6_abdopain = dataset.abdopain_symp_50 & colorectal_ca_symp_6_months(abdopain_date).exists_for_patient()
+    dataset.ca_6_anaemia = dataset.anaemia_symp_60 & colorectal_ca_symp_6_months(anaemia_date).exists_for_patient()
+    dataset.ca_6_wl_abdopain = dataset.wl_abdopain_symp_40 & (colorectal_ca_symp_6_months(wl_date).exists_for_patient() | colorectal_ca_symp_6_months(abdopain_date).exists_for_patient())
+    dataset.ca_6_prbleed_abdopain = dataset.prbleed_abdopain_symp & colorectal_ca_symp_6_months(prbleed_date).exists_for_patient()
+    dataset.ca_6_prbleed_wl = dataset.prbleed_wl_symp & colorectal_ca_symp_6_months(prbleed_date).exists_for_patient()
     dataset.ca_6_all_lowerGI = (dataset.ca_6_ida | dataset.ca_6_cibh | dataset.ca_6_abdomass | dataset.ca_6_prbleed | dataset.ca_6_wl | dataset.ca_6_abdopain | dataset.ca_6_anaemia | dataset.ca_6_wl_abdopain | dataset.ca_6_prbleed_abdopain | dataset.ca_6_prbleed_wl)
 
     return dataset
