@@ -14,6 +14,13 @@ actions:
       highly_sensitive:
         cohort: output/data/dataset_static.csv.gz  
 
+  generate_dataset_fit_table:
+    run: ehrql:v1 generate-dataset analysis/define_static_dataset_fit.py 
+      --output output/data/dataset_static_fit.csv.gz
+    outputs:
+      highly_sensitive:
+        cohort: output/data/dataset_static_fit.csv.gz
+
   measures_demo:
     run: ehrql:v1 generate-measures analysis/measures_demo.py
       --output output/measures/measures_demo.csv

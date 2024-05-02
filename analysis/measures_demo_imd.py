@@ -37,10 +37,10 @@ dataset.elig_follow_up_days = case(
         when(dataset.elig_cohort).then(follow_up_days)
 )
 
-dataset.fit_any = case(
-        when(dataset.fit_test_any).then(1),
-        otherwise=0
-)
+#dataset.fit_any = case(
+        #when(dataset.fit_test_any).then(1),
+        #otherwise=0
+#)
 dataset.ida = case(
         when(dataset.ida_symp).then(1),
         otherwise=0
@@ -95,12 +95,12 @@ measures.configure_disclosure_control(enabled=False)
 
 measures.define_defaults(intervals=months(intervals).starting_on(start_date))
 
-measures.define_measure(
-    name="fit_test_rate", 
-    numerator=dataset.fit_any,
-    denominator=dataset.elig_follow_up_days,
-    group_by={"imd": imd5}
-    )
+#measures.define_measure(
+    #name="fit_test_rate", 
+    #numerator=dataset.fit_any,
+    #denominator=dataset.elig_follow_up_days,
+    #group_by={"imd": imd5}
+    #)
 
 measures.define_measure(
     name="ida_symp_rate", 
@@ -151,23 +151,23 @@ measures.define_measure(
     group_by={"imd": imd5}
     )
 
-measures.define_measure(
-    name="fit_6_rate", 
-    numerator=dataset.fit_6,
-    denominator=dataset.elig_follow_up_days,
-    group_by={"imd": imd5}
-    )
+#measures.define_measure(
+    #name="fit_6_rate", 
+    #numerator=dataset.fit_6,
+    #denominator=dataset.elig_follow_up_days,
+    #group_by={"imd": imd5}
+    #)
 
-measures.define_measure(
-    name="diag_6_rate", 
-    numerator=dataset.diag_6_all_lowerGI,
-    denominator=dataset.lowerGI_any_symp,
-    group_by={"imd": imd5}
-    )
+#measures.define_measure(
+    #name="diag_6_rate", 
+    #numerator=dataset.diag_6_all_lowerGI,
+    #denominator=dataset.lowerGI_any_symp,
+    #group_by={"imd": imd5}
+    #)
 
-measures.define_measure(
-    name="ca_6_rate", 
-    numerator=dataset.ca_6_all_lowerGI,
-    denominator=dataset.lowerGI_any_symp,
-    group_by={"imd": imd5}
-    )
+#measures.define_measure(
+    #name="ca_6_rate", 
+    #numerator=dataset.ca_6_all_lowerGI,
+    #denominator=dataset.lowerGI_any_symp,
+    #group_by={"imd": imd5}
+    #)

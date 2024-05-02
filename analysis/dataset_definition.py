@@ -1,6 +1,6 @@
 from ehrql import Dataset, years, days, months, minimum_of, maximum_of, case, when
 from ehrql.tables.core import patients
-from ehrql.tables.tpp import practice_registrations, ons_deaths, clinical_events, clinical_events_ranges, apcs
+from ehrql.tables.tpp import practice_registrations, ons_deaths, clinical_events, clinical_events_ranges
 
 import codelists
 
@@ -265,19 +265,19 @@ def make_dataset_lowerGI(index_date, end_date):
     dataset.fit_lowerGI_any_days = symp_to_fit_days(dataset.fit_lowerGI_any_date, dataset.lowerGI_any_symp_date)
     dataset.fit_lowerGI_2ww_days = symp_to_fit_days(dataset.fit_lowerGI_2ww_date, dataset.lowerGI_2ww_symp_date)
     
-    symp_num_ca = clinical_events.where(clinical_events.snomedct_code.is_in(codelists.colorectal_symptom_codes)
+    lowerGI_any_num_ca = clinical_events.where(clinical_events.snomedct_code.is_in(codelists.colorectal_symptom_codes)
         ).where(
             clinical_events.date.is_on_or_between(dataset.lowerGI_any_symp_date, dataset.ca_lowerGI_any_date)
         ).date.count_episodes_for_patient(days(42))
     
-    dataset.symp_num_ca = symp_num_ca
+    dataset.lowerGI_any_num_ca = lowerGI_any_num_ca
 
-    symp_num_fit = clinical_events.where(clinical_events.snomedct_code.is_in(codelists.colorectal_symptom_codes)
+    lowerGI_any_num_fit = clinical_events.where(clinical_events.snomedct_code.is_in(codelists.colorectal_symptom_codes)
         ).where(
             clinical_events.date.is_on_or_between(dataset.lowerGI_any_symp_date, dataset.fit_lowerGI_any_date)
         ).date.count_episodes_for_patient(days(42))
     
-    dataset.symp_num_fit = symp_num_fit
+    dataset.lowerGI_any_num_fit = lowerGI_any_num_fit
 
     return dataset
 
