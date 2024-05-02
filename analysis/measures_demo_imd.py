@@ -69,10 +69,10 @@ dataset.anaemia_60 = case(
         when(dataset.anaemia_symp_60).then(1),
         otherwise=0
 )
-dataset.fit_6 = case(
-        when(dataset.fit_6_all_lowerGI).then(1),
-        otherwise=0
-)
+#dataset.fit_6 = case(
+        #when(dataset.fit_6_all_lowerGI).then(1),
+        #otherwise=0
+#)
 
 ##########
 
