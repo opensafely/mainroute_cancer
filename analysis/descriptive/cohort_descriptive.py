@@ -19,10 +19,11 @@ num_colorectalca = df["colorectal_ca_diag"].value_counts().to_frame()
 num_colorectalca.columns = ["whole cohort"]
 num_lowerGIsymptom = df["lowerGI_any_symp"].value_counts().to_frame()
 num_lowerGIsymptom.columns = ["whole cohort"]
-num_fit = df["fit_6_all_lowerGI"].value_counts().to_frame()
-num_fit.columns = ["whole cohort"]
-num_diagnostic = df["diag_6_all_lowerGI"].value_counts().to_frame()
-num_diagnostic.columns = ["whole cohort"]
+
+#num_fit = df["fit_6_all_lowerGI"].value_counts().to_frame()
+#num_fit.columns = ["whole cohort"]
+#num_diagnostic = df["diag_6_all_lowerGI"].value_counts().to_frame()
+#num_diagnostic.columns = ["whole cohort"]
 
 #a = df.loc[df['lowerGI_any_symp'] == True]
 #num_age_group_lowerGI = a["age_group"].value_counts().to_frame()
@@ -34,7 +35,7 @@ num_diagnostic.columns = ["whole cohort"]
 #num_ethnicity6_lowerGI = a["ethnicity6"].value_counts().to_frame()
 #num_ethnicity6_lowerGI.columns = ["lowerGI symptom"]
 
-agg_data_whole_cohort = pd.concat([num_age_group, num_sex, num_imd5, num_ethnicity6, num_region, num_colorectalca, num_lowerGIsymptom, num_fit, num_diagnostic])
+agg_data_whole_cohort = pd.concat([num_age_group, num_sex, num_imd5, num_ethnicity6, num_region, num_colorectalca, num_lowerGIsymptom])
 #agg_data_lowerGI = pd.concat([num_age_group_lowerGI, num_sex_lowerGI, num_imd5_lowerGI, num_ethnicity6_lowerGI])
 #agg_data = pd.concat([agg_data_whole_cohort, agg_data_lowerGI], axis=1)
 
